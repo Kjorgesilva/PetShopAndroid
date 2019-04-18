@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:title="Início"
+        android:icon="@drawable/home_black_24dp"/>
+    <item
+        android:id="@+id/navigation_cadastro"
+        android:title="Cadastro"
+        android:icon="@drawable/add_black_24dp"/>
+    <item
+        android:id="@+id/navigation_relatorio"
+        android:title="Relatorio"
+        android:icon="@drawable/relatorio_black_24dp"/>
+    <item
+        android:id="@+id/navigation_vacinas"
+        android:title="Vacinas"
+        android:icon="@drawable/vacina_black_24dp"/>
+    <item
+        android:id="@+id/navigation_historico"
+        android:title="Historico"
+        android:icon="@drawable/historico_black_24dp"/>
+
+
+
+
+
+</menu>
