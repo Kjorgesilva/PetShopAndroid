@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,8 @@ public class VacinasFragment extends Fragment {
 
     private Context contexto;
     private RecyclerView recyclerView;
-    private AdapterVacinas adapterVacinas;
-    private List<Vacinas> listaTeste;
-    private Vacinas vacinaTeste;
+    private List<Vacinas> listaTeste = new ArrayList<>();
     private VacinasDAO db;
-    private List<VacinasWs> vacinasWsLista = new ArrayList<>();
 
 
     public VacinasFragment() {
@@ -48,20 +46,11 @@ public class VacinasFragment extends Fragment {
         contexto = getContext();
         db = new VacinasDAO(getContext());
 
+        listaTeste.addAll(db.findAllVacinas());
 
-
-        listaTeste = new ArrayList<>();
-        vacinaTeste = new Vacinas();
-
-        vacinaTeste.setId(1);
-        vacinaTeste.setAviso("dasdasdad");
-        vacinaTeste.setDataDaProxima("21/04/2019");
-        vacinaTeste.setDataVacina("20/04/2019");
-//      vacinaTeste.setDescricao("descrição");
-//      vacinaTeste.setVacinaEmDia(true);
-
-        listaTeste.add(vacinaTeste);
-
+        for (int l=0; l<listaTeste.size();l++){
+            Toast.makeText(contexto,"valor" + listaTeste.get(l).getNomeAnimal(),Toast.LENGTH_LONG).show();
+        }
 
         recyclerView = view.findViewById(R.id.recyclerViewAnimal);
         recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
@@ -69,7 +58,6 @@ public class VacinasFragment extends Fragment {
 
 
         VacinasWs.listarVacinas(contexto, "vacinacao/listavacinas");
-
 
         return view;
 

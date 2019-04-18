@@ -9,8 +9,11 @@ public class Vacinas implements Serializable {
     private String aviso;
     private String dataVacina;
     private String dataDaProxima;
-    private Animal idAnimal;
-    private TipoVacinas idTipoVacina;
+    private String nomeAnimal;
+    private int idAnimal;
+
+    private String nomeVacina;
+    private int idTipoVacina;
 
     public Vacinas() {
     }
@@ -47,19 +50,35 @@ public class Vacinas implements Serializable {
         this.dataDaProxima = dataDaProxima;
     }
 
-    public Animal getIdAnimal() {
+    public String getNomeAnimal() {
+        return nomeAnimal;
+    }
+
+    public void setNomeAnimal(String nomeAnimal) {
+        this.nomeAnimal = nomeAnimal;
+    }
+
+    public int getIdAnimal() {
         return idAnimal;
     }
 
-    public void setIdAnimal(Animal idAnimal) {
+    public void setIdAnimal(int idAnimal) {
         this.idAnimal = idAnimal;
     }
 
-    public TipoVacinas getIdTipoVacina() {
+    public String getNomeVacina() {
+        return nomeVacina;
+    }
+
+    public void setNomeVacina(String nomeVacina) {
+        this.nomeVacina = nomeVacina;
+    }
+
+    public int getIdTipoVacina() {
         return idTipoVacina;
     }
 
-    public void setIdTipoVacina(TipoVacinas idTipoVacina) {
+    public void setIdTipoVacina(int idTipoVacina) {
         this.idTipoVacina = idTipoVacina;
     }
 }
