@@ -48,7 +48,7 @@ public class AdapterVacinas extends RecyclerView.Adapter<AdapterVacinas.VacinasH
         @Override
     public void onBindViewHolder(@NonNull final AdapterVacinas.VacinasHolder holder, final int position) {
 
-          holder.txt_nome_animal.setText(list.get(position).getNomeAnimal().toUpperCase());
+            holder.txt_nome_animal.setText(list.get(position).getNomeAnimal().toUpperCase());
             holder.txt_descricao_animal.setText(list.get(position).getNomeVacina());
             holder.txt_data_animal.setText(list.get(position).getDataVacina());
 

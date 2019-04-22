@@ -33,6 +33,8 @@ public class VacinasDAO {
 
     public long inserir(Vacinas cadastro) {
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("_id", cadastro.getId());
         contentValues.put("aviso", cadastro.getAviso());
         contentValues.put("dataVacina", cadastro.getDataVacina());
         contentValues.put("dataDaProxima", cadastro.getDataDaProxima());
@@ -40,7 +42,6 @@ public class VacinasDAO {
         contentValues.put("idTipoVacina", cadastro.getIdTipoVacina());
         contentValues.put("nomeAnimal", cadastro.getNomeAnimal());
         contentValues.put("nomeVacina", cadastro.getNomeVacina());
-
 
 
         return getDabase().insert("vacinas", null, contentValues);
@@ -65,13 +66,12 @@ public class VacinasDAO {
             listaVacina.setNomeVacina((cursor.getString(cursor.getColumnIndex("nomeVacina"))));
 
 
-
-
-
             listatodasVacinas.add(listaVacina);
 
 
         }
+
+        cursor.close();
 
         return listatodasVacinas;
     }

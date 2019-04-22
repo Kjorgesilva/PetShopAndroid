@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceHelp {
     private EditText edtUsuario, edtSenha;
     private Context contexto = this;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements InterfaceHelp {
         btnEnter = findViewById(R.id.btnEnter);
         edtUsuario = findViewById(R.id.edtUsuario);
         edtSenha = findViewById(R.id.edtSenha);
+//        db = new VacinasDAO(getContext());
+
     }
 
     @Override
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceHelp {
                 if (edtUsuario.getText().toString().isEmpty() || edtSenha.getText().toString().isEmpty()) {
                     Toast.makeText(contexto, "Preencha todos os campos", Toast.LENGTH_LONG).show();
                 } else {
+
                     login(edtUsuario.getText().toString(), edtSenha.getText().toString());
                     //Toast.makeText(getApplicationContext(), "login: " + edtUsuario.getText().toString() + " Senha: " + edtSenha.getText().toString(), Toast.LENGTH_LONG).show();
                 }

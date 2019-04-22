@@ -1,8 +1,11 @@
 package com.example.pethealth.WebService;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -35,8 +38,18 @@ public class UsuarioWs {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.e("Erro","Erro" + error.getMessage());
+                AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
 
+                alerta.setTitle("Aviso!!");
+                alerta.setMessage("Login ou Senha inválidos...");
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                alerta.show();
             }
         });
         postRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

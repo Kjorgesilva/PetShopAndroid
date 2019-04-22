@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.VacinasFragment">
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </android.support.v7.widget.RecyclerView>
-
 
     </LinearLayout>
 

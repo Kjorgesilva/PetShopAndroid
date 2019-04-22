@@ -17,14 +17,17 @@ import com.example.pethealth.Model.Vacinas;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class VacinasWs {
 
-private VacinasDAO db;
+    private VacinasDAO db;
+
     public static void listarVacinas(final Context contexto, String path) {
         RequestQueue queue = Volley.newRequestQueue(contexto);
         final JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONArray>() {
@@ -33,11 +36,39 @@ private VacinasDAO db;
                 VacinasDAO db = new VacinasDAO(contexto);
 
                 try {
-                    List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>(){}.getType());
-                        for (int i = 0 ; i<list.size();i++){
+                    List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>() {
+                    }.getType());
 
+                    if (list.isEmpty()) {
+                        Toast.makeText(contexto, "Lista vazia, tomar vacina", Toast.LENGTH_LONG).show();
+                    } else {
 
-                            db.inserir(list.get(i));
+                        if (db.findAllVacinas().size() > 0) {
+
+                            List<Vacinas> listDataBase = db.findAllVacinas();
+                            int cont = 0;
+
+                            for (int i = 0; i < list.size(); i++) {
+
+                                for (int x = 0; x < listDataBase.size(); x++) {
+                                    if (list.get(i).getId() != listDataBase.get(x).getId()) {
+                                        cont = cont + 1;
+                                        Log.e("teste", "Id serv: " + list.get(i).getId() +
+                                                " id sqlite: " + listDataBase.get(x).getId());
+                                    }
+                                }
+                                if (cont == listDataBase.size()) {
+                                    db.inserir(list.get(i));
+                                    Log.e("teste", "entrou");
+                                }
+                                cont = 0;
+                            }
+                        } else {
+                            for (int i = 0; i < list.size(); i++) {
+                                db.inserir(list.get(i));
+                            }
+                        }
+                    }
 
 //                            Toast.makeText(contexto,"id do animal: " + list.get(i).getId() +
 //                                    "aviso " + list.get(i).getAviso() + " Data vacina: " + list.get(i).getDataVacina()+
@@ -48,10 +79,8 @@ private VacinasDAO db;
 //                            list.get(i).getNomeAnimal());
 
 
-                        }
-
                 } catch (IllegalStateException | JsonSyntaxException exception) {
-                    Log.e("Erro","Erro");
+                    Log.e("Erro", "Erro");
                 }
             }
         }, new Response.ErrorListener() {
@@ -67,7 +96,9 @@ private VacinasDAO db;
                 return header;
             }
         };
-        getRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        getRequest.setRetryPolicy(new
+
+                DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(getRequest);
 
     }

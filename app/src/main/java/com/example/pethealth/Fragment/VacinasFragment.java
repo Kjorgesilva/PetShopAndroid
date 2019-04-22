@@ -47,18 +47,17 @@ public class VacinasFragment extends Fragment {
         db = new VacinasDAO(getContext());
 
         listaTeste.addAll(db.findAllVacinas());
-
-        for (int l=0; l<listaTeste.size();l++){
-            Toast.makeText(contexto,"valor" + listaTeste.get(l).getNomeAnimal(),Toast.LENGTH_LONG).show();
-        }
-
-        recyclerView = view.findViewById(R.id.recyclerViewAnimal);
-        recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
-        recyclerView.setAdapter(new AdapterVacinas(contexto, listaTeste, clickListner()));
-
-
         VacinasWs.listarVacinas(contexto, "vacinacao/listavacinas");
 
+        if (listaTeste.isEmpty()){
+            Toast.makeText(contexto,"Lista Vazia",Toast.LENGTH_LONG).show();
+        }else {
+            recyclerView = view.findViewById(R.id.recyclerViewAnimal);
+            recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
+            recyclerView.setAdapter(new AdapterVacinas(contexto, listaTeste, clickListner()));
+
+
+        }
         return view;
 
     }
