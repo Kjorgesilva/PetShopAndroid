@@ -5,31 +5,25 @@ import java.io.Serializable;
 public class Consulta implements Serializable {
     private int id;
     private String nome;
-    private String telefone;
+    private String dataInicio;
     private String endereco;
-    private String data;
+    private String dataFim;
     private String medico;
 
-    public Consulta(int id, String nome, String telefone, String endereco, String data, String medico) {
-        this.id = id;
+
+    public Consulta(String nome, String endereco, String data, String spinner, String dataFim) {
         this.nome = nome;
-        this.telefone = telefone;
+        this.dataInicio = data;
         this.endereco = endereco;
-        this.data = data;
-        this.medico = medico;
+        this.dataFim = dataFim;
+        this.medico = spinner;
+
     }
 
     public Consulta() {
+
     }
 
-    public Consulta(String nome, String telefone, String endereco, String data, String medico) {
-
-        this.nome = nome;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.data = data;
-        this.medico = medico;
-    }
 
     public int getId() {
         return id;
@@ -47,12 +41,12 @@ public class Consulta implements Serializable {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getDataInicio() {
+        return dataInicio;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
     public String getEndereco() {
@@ -63,12 +57,12 @@ public class Consulta implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getData() {
-        return data;
+    public String getDataFim() {
+        return dataFim;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
     }
 
     public String getMedico() {

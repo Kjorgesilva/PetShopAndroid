@@ -8,7 +8,7 @@ public class Medico implements Serializable {
     private String nome;
     private String telefone;
     private String email;
-    private Usuario usuario;
+    private int idUsuario;
 
 
     public Medico() {
@@ -46,11 +46,11 @@ public class Medico implements Serializable {
         this.email = email;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

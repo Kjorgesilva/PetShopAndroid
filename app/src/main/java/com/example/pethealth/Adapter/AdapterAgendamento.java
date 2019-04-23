@@ -38,7 +38,7 @@ public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.
     public void onBindViewHolder(@NonNull final AdapterAgendamento.AgendamentoHolder holder, final int position) {
         holder.txt_nome.setText(list.get(position).getNome().toUpperCase());
         holder.txt_medico.setText(list.get(position).getMedico());
-        holder.txt_data.setText(list.get(position).getData());
+        holder.txt_data.setText(list.get(position).getDataInicio());
 
         if (AgendamentoOnClickListner != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

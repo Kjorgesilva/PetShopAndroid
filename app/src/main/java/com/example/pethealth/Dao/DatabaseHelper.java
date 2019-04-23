@@ -25,10 +25,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE agenda(_id INTEGER PRIMARY KEY, nome TEXT , telefone TEXT, endereco TEXT, data TEXT,medico TEXT )");
+        db.execSQL("CREATE TABLE agenda(_id INTEGER PRIMARY KEY, nome TEXT , dataInicio TEXT, endereco TEXT, dataFim TEXT , medico TEXT )");
         db.execSQL("CREATE TABLE vacinas(_id INTEGER PRIMARY KEY, aviso TEXT , dataVacina TEXT, dataDaProxima TEXT, idAnimal INTEGER, nomeVacina TEXT, nomeAnimal TEXT, idTipoVacina INTEGER )");
         db.execSQL("CREATE TABLE animal(_id INTEGER PRIMARY KEY, nome TEXT , raca TEXT, cor TEXT, dataNascimento TEXT, sexo TEXT, paisOrigem TEXT, observacoes TEXT, idCliente INTEGER, idEspecieAnimal INTEGER )");
         db.execSQL("CREATE TABLE tipoVacina(_id INTEGER PRIMARY KEY, descricao TEXT )");
+        db.execSQL("CREATE TABLE medico(_id INTEGER PRIMARY KEY, nome TEXT, telefone TEXT, email TEXT, idUsuario INTEGER )");
+
     }
 
     @Override

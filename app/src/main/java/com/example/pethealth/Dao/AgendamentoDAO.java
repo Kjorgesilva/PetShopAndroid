@@ -32,9 +32,9 @@ public class AgendamentoDAO {
     public long inserir(Consulta cadastro) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("nome", cadastro.getNome());
-        contentValues.put("telefone", cadastro.getTelefone());
+        contentValues.put("dataInicio", cadastro.getDataInicio());
         contentValues.put("endereco", cadastro.getEndereco());
-        contentValues.put("data", cadastro.getData());
+        contentValues.put("dataFim", cadastro.getDataFim());
         contentValues.put("medico", cadastro.getMedico());
 
         return getDabase().insert("agenda", null, contentValues);
@@ -48,10 +48,12 @@ public class AgendamentoDAO {
             Consulta listarCadastro = new Consulta();
             listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             listarCadastro.setNome((cursor.getString(cursor.getColumnIndex("nome"))));
-            listarCadastro.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+            //trocar o camppo telefone para o data inicio e o data para o data fim
+            listarCadastro.setDataInicio(cursor.getString(cursor.getColumnIndex("dataInicio")));
             listarCadastro.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
-            listarCadastro.setMedico((cursor.getString(cursor.getColumnIndex("medico"))));
-            listarCadastro.setData((cursor.getString(cursor.getColumnIndex("data"))));
+            listarCadastro.setDataFim((cursor.getString(cursor.getColumnIndex("dataFim"))));
+            listarCadastro.setMedico(cursor.getString(cursor.getColumnIndex("medico")));
+
 
 
             Log.e("nome", "passou : " + listarCadastro.getNome() + String.valueOf(listarCadastro.getId()));
@@ -69,10 +71,10 @@ public class AgendamentoDAO {
 
         ContentValues values = new ContentValues();
         values.put("nome", agendamento.getNome());
-        values.put("telefone", agendamento.getTelefone());
+        values.put("dataInicio", agendamento.getDataInicio());
         values.put("endereco", agendamento.getEndereco());
         values.put("medico", agendamento.getMedico());
-        values.put("data", agendamento.getData());
+        values.put("dataFim", agendamento.getDataFim());
 
         Log.e("pass", "update: " + agendamento.getNome());
 
