@@ -10,17 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.pethealth.Model.Consulta;
+import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.R;
 
 import java.util.List;
 
 public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.AgendamentoHolder> {
-    private List<Consulta> list;
+    private List<Agenda> list;
     private Context contexto;
     private AgendamentoOnClickListner AgendamentoOnClickListner;
 
-    public AdapterAgendamento(Context context, List<Consulta> listarBanco, AdapterAgendamento.AgendamentoOnClickListner clickListner) {
+    public AdapterAgendamento(Context context, List<Agenda> listarBanco, AdapterAgendamento.AgendamentoOnClickListner clickListner) {
         this.contexto = context;
         this.list = listarBanco;
         AgendamentoOnClickListner = clickListner;
@@ -36,8 +36,8 @@ public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.
 
     @Override
     public void onBindViewHolder(@NonNull final AdapterAgendamento.AgendamentoHolder holder, final int position) {
-        holder.txt_nome.setText(list.get(position).getNome().toUpperCase());
-        holder.txt_medico.setText(list.get(position).getMedico());
+        holder.txt_nome.setText("teste");
+        holder.txt_medico.setText("teste2");
         holder.txt_data.setText(list.get(position).getDataInicio());
 
         if (AgendamentoOnClickListner != null) {

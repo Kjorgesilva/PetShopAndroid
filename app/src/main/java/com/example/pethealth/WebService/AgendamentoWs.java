@@ -31,7 +31,7 @@ public class AgendamentoWs {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Toast.makeText(contexto,"passou aqui",Toast.LENGTH_LONG).show();
+                    Toast.makeText(contexto,"passou cadastro",Toast.LENGTH_LONG).show();
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
