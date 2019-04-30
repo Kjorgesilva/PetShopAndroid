@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,20 @@ import android.widget.Toast;
 
 import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.AnimalDAO;
+import com.example.pethealth.Dao.ClienteDAO;
+import com.example.pethealth.Dao.EnderecoDAO;
 import com.example.pethealth.Dao.MedicoDAO;
 import com.example.pethealth.InterfaceHelp.Mask;
 import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.Model.Animal;
+import com.example.pethealth.Model.Cliente;
+import com.example.pethealth.Model.Endereco;
 import com.example.pethealth.Model.Medico;
 import com.example.pethealth.R;
 import com.example.pethealth.WebService.AgendamentoWs;
+import com.example.pethealth.WebService.AnimalWs;
+import com.example.pethealth.WebService.ClienteWs;
+import com.example.pethealth.WebService.EnderecoWs;
 import com.example.pethealth.WebService.MedicoWS;
 
 import java.util.ArrayList;
@@ -38,8 +46,9 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class CadastroFragment extends Fragment {
-    private EditText edt_nome, edt_nome_dono, edt_endereco, edt_data, edt_data_fim;
-    private ImageButton imgSpinner;
+    private EditText edt_data, edt_data_fim;
+    private TextView edt_nome_dono, edt_nome_animal, edt_endereco;
+    private ImageButton imgSpinner,imgEdt_nome_animal,imgEdt_nome, imgedt_endereco;
     private TextView tvSpinner;
     private Button btn_cadastrar;
     private Context contexto;
@@ -47,10 +56,26 @@ public class CadastroFragment extends Fragment {
 
     private String horario;
     private String horario2;
-    private List<Medico> listaTeste = new ArrayList<>();
+    private List<Medico> listaMedico = new ArrayList<>();
+    private List<Animal> listaAnimal = new ArrayList<>();
+    private List<Cliente> listaCliente = new ArrayList<>();
+    private List<Endereco> listaEndereco = new ArrayList<>();
+
+
+    private int id_animal,id_cliente,id_endereco,id_medico;
+    private Animal animal;
+    private Cliente cliente;
+    private Endereco endereco;
+    private Medico medico;
+
+
     //serve para fazer a ligação com a classe AgendamentoDAO e chama os metodos do Banco
     AgendamentoDAO db = new AgendamentoDAO(getContext());
     MedicoDAO dbMedico = new MedicoDAO(getContext());
+    AnimalDAO dbAnimal = new AnimalDAO(getContext());
+    ClienteDAO dbCliente = new ClienteDAO(getContext());
+    EnderecoDAO dbEndereco = new EnderecoDAO(getContext());
+
 
     public CadastroFragment() {
         // Required empty public constructor
@@ -64,22 +89,39 @@ public class CadastroFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
         contexto = getContext();
+
+        dbAnimal = new AnimalDAO(getContext());
+        listaAnimal.addAll(dbAnimal.findAllAnimal());
+        AnimalWs.listarAnimal(contexto, "animal/listaAnimal");
+
         dbMedico = new MedicoDAO(getContext());
+        listaMedico.addAll(dbMedico.findAllMedico());
+        MedicoWS.listarMedico(contexto, "medico/listaMedico");
 
-        listaTeste.addAll(dbMedico.findAllMedico());
-        MedicoWS.listarMedico(contexto, "medico/listamedico");
+
+        dbCliente = new ClienteDAO(getContext());
+        listaCliente.addAll(dbCliente.findAllCliente());
+        ClienteWs.listarCliente(contexto,"cliente/listaCliente");
 
 
-        edt_nome = view.findViewById(R.id.edt_nome);
+        dbEndereco = new EnderecoDAO(getContext());
+        listaEndereco.addAll(dbEndereco.findAllEndereco());
+        EnderecoWs.listarEndereco(contexto,"endereco/listaEndereco");
+
+        edt_nome_animal = view.findViewById(R.id.edt_nome_animal);
         edt_nome_dono = view.findViewById(R.id.edt_nome_dono);
         edt_data_fim = view.findViewById(R.id.edt_data_fim);
         edt_endereco = view.findViewById(R.id.edt_endereco);
         edt_data = view.findViewById(R.id.edt_data);
         btn_cadastrar = view.findViewById(R.id.btn_cadastrar);
         imgSpinner = view.findViewById(R.id.imgSpinner);
+        imgEdt_nome_animal = view.findViewById(R.id.imgEdt_nome_animal);
+        imgEdt_nome = view.findViewById(R.id.imgEdt_nome);
+        imgedt_endereco = view.findViewById(R.id.imgEdt_endereco);
         tvSpinner = view.findViewById(R.id.tvSpinner);
         spinner = view.findViewById(R.id.spinnerHoras);
         spinner2 = view.findViewById(R.id.spinnerHorasFim);
+
 
         ArrayAdapter adaptador = ArrayAdapter.createFromResource
                 (contexto, R.array.horarioInicio, android.R.layout.simple_dropdown_item_1line);
@@ -98,20 +140,61 @@ public class CadastroFragment extends Fragment {
         edt_data.addTextChangedListener(Mask.insert("##/##/####", edt_data));
         edt_data_fim.addTextChangedListener(Mask.insert("##/##/####", edt_data_fim));
 
+
+        edt_endereco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogEndereco();
+            }
+        });
+
+        imgedt_endereco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogEndereco();
+            }
+        });
+
+        edt_nome_animal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogAnimal();
+            }
+        });
+
+        imgEdt_nome_animal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogAnimal();
+            }
+        });
+
+        imgEdt_nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogCliente();
+            }
+        });
+
+        edt_nome_dono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogCliente();
+            }
+        });
+
         imgSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               showDialogMedico();
 
-                showDialogItens();
-                // Toast.makeText(contexto,"teste imagem",Toast.LENGTH_LONG).show();
             }
         });
 
         tvSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogItens();
-                // Toast.makeText(contexto,"teste spiner",Toast.LENGTH_LONG).show();
+                showDialogMedico();
 
             }
         });
@@ -144,8 +227,8 @@ public class CadastroFragment extends Fragment {
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edt_nome.getText().toString().isEmpty()) {
-                    edt_nome.setError("Preencha o campo");
+                if (edt_nome_animal.getText().toString().isEmpty()) {
+                    edt_nome_animal.setError("Preencha o campo");
                 } else if (edt_data_fim.getText().toString().isEmpty()) {
                     edt_data_fim.setError("Preencha o campo");
                 } else if (edt_nome_dono.getText().toString().isEmpty()) {
@@ -159,14 +242,11 @@ public class CadastroFragment extends Fragment {
                 } else {
 
 
-                    int idAnimal = Integer.parseInt(edt_nome.getText().toString());
-                    int idCliente = Integer.parseInt(edt_nome_dono.getText().toString());
-                    int idEndereco = Integer.parseInt(edt_endereco.getText().toString());
-                    int data = Integer.parseInt(edt_data.getText().toString() + " " + horario);
-                    int idMedico = Integer.parseInt(tvSpinner.getText().toString());
-                    int dataFim = Integer.parseInt(edt_data_fim.getText().toString() + " " + horario2);
 
-//                    db.inserir(new Agenda(idAnimal, idCliente, idEndereco, data, idMedico, dataFim));
+                    String data = (edt_data.getText().toString() + " " + horario);
+                    String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
+
+                    db.inserir(new Agenda(animal, cliente, endereco, data, medico, dataFim));
 
                     List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
                     int id = agenda.get(agenda.size() - 1).getId();
@@ -174,10 +254,10 @@ public class CadastroFragment extends Fragment {
 
                     Toast.makeText(getContext(), "Agenda Agendada", Toast.LENGTH_LONG).show();
 
-//                    cadValor(id, idAnimal, idCliente, idEndereco, data, idMedico, dataFim);
+                   cadValor( id, id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
 
 
-                    edt_nome.setText("");
+                    edt_nome_animal.setText("");
                     edt_nome_dono.setText("");
                     edt_data_fim.setText("");
                     edt_endereco.setText("");
@@ -192,15 +272,15 @@ public class CadastroFragment extends Fragment {
         return view;
     }
 
-    private void cadValor(int id, int idAnimal, int idCliente, int idEndereco, String data, int idMedico, String dataFim) {
+    private void cadValor(int id,int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("id", String.valueOf(id));
-        map.put("idAnimal", String.valueOf(idAnimal));
-        map.put("idCliente", String.valueOf(idCliente));
-        map.put("idEndereco", String.valueOf(idEndereco));
+        map.put("id",String.valueOf(id));
+        map.put("id_animal", String.valueOf(id_animal));
+        map.put("id_cliente", String.valueOf(id_cliente));
+        map.put("id_endereco", String.valueOf(id_endereco));
         map.put("data", data);
-        map.put("idMedico", String.valueOf(idMedico));
+        map.put("id_medico", String.valueOf(id_medico));
         map.put("dataFim", dataFim);
 
         AgendamentoWs.agendamentoMedico(contexto, "consulta", map);
@@ -208,43 +288,79 @@ public class CadastroFragment extends Fragment {
     }
 
 
-    public void showDialogItens() {
-        MedicoDAO dao = new MedicoDAO(contexto);
-        final List<Medico> produtos = new ArrayList<>();
-        produtos.addAll(dao.findAllMedico());
+    public void showDialogMedico() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-        alert.setTitle("Selecione um produto abaixo:");
-        String[] itens = new String[produtos.size()];
-        for (int x = 0; x < produtos.size(); x++) {
-            itens[x] = produtos.get(x).getNome();
+        alert.setTitle("Selecione o Medico:");
+        String[] itens = new String[listaMedico.size()];
+        for (int x = 0; x < listaMedico.size(); x++) {
+            itens[x] = listaMedico.get(x).getNome();
         }
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                tvSpinner.setText(produtos.get(i).getNome());
+                tvSpinner.setText(listaMedico.get(i).getNome());
+                id_medico = listaMedico.get(i).getId();
+                medico = listaMedico.get(i);
+            }
+        });
+        alert.show();
+    }
+
+    public void showDialogEndereco() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+        alert.setTitle("Selecione Endereço:");
+        String[] itens = new String[listaEndereco.size()];
+        for (int x = 0; x < listaEndereco.size(); x++) {
+            itens[x] = listaEndereco.get(x).getRua();
+        }
+        alert.setItems(itens, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                edt_endereco.setText(listaEndereco.get(i).getRua());
+                id_endereco = listaEndereco.get(i).getId();
+                endereco = listaEndereco.get(i);
+            }
+        });
+
+
+        alert.show();
+    }
+    public void showDialogCliente() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+        alert.setTitle("Selecione Cliente:");
+        String[] itens = new String[listaCliente.size()];
+        for (int l = 0; l < listaCliente.size(); l++) {
+            itens[l] = listaCliente.get(l).getNome();
+        }
+        alert.setItems(itens, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                edt_nome_dono.setText(listaCliente.get(i).getNome());
+                id_cliente = listaCliente.get(i).getId();
+                cliente =listaCliente.get(i);
             }
         });
         alert.show();
     }
 
     public void showDialogAnimal() {
-        AnimalDAO dao = new AnimalDAO(contexto);
-        final List<Animal> animals = new ArrayList<>();
-        animals.addAll(dao.findAllAnimal());
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Animal:");
-        String[] itens = new String[animals.size()];
-        for (int x = 0; x < animals.size(); x++) {
-            itens[x] = animals.get(x).getNome();
+        String[] itens = new String[listaAnimal.size()];
+        for (int l = 0; l < listaAnimal.size(); l++) {
+            itens[l] = listaAnimal.get(l).getNome();
         }
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                tvSpinner.setText(animals.get(i).getNome());
+                edt_nome_animal.setText(listaAnimal.get(i).getNome());
+                id_animal = listaAnimal.get(i).getId();
+                animal = listaAnimal.get(i);
             }
         });
         alert.show();
     }
+
 
 
       public static CadastroFragment newInstance() {

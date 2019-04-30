@@ -12,8 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pethealth.Dao.MedicoDAO;
-import com.example.pethealth.Model.Medico;
+import com.example.pethealth.Dao.EnderecoDAO;
+import com.example.pethealth.Model.Endereco;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -24,30 +24,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MedicoWS {
+public class EnderecoWs {
 
-    private MedicoDAO db;
+    private EnderecoDAO db;
 
-    public static void listarMedico(final Context contexto, String path) {
+    public static void listarEndereco(final Context contexto, String path) {
         RequestQueue queue = Volley.newRequestQueue(contexto);
         final JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
 
-                MedicoDAO db = new MedicoDAO(contexto);
+                EnderecoDAO db = new EnderecoDAO(contexto);
 
                 try {
-                    List<Medico> list = new Gson().fromJson(response.toString(), new TypeToken<List<Medico>>() {
+                    List<Endereco> list = new Gson().fromJson(response.toString(), new TypeToken<List<Endereco>>() {
                     }.getType());
 
                     if (list.isEmpty()) {
                         Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
                     } else {
 
-                        if (db.findAllMedico().size() > 0) {
+                        if (db.findAllEndereco().size() > 0) {
 
-                            List<Medico> listDataBase = db.findAllMedico();
+                            List<Endereco> listDataBase = db.findAllEndereco();
                             int cont = 0;
 
                             for (int i = 0; i < list.size(); i++) {
@@ -78,7 +78,13 @@ public class MedicoWS {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Erro", error.toString());
+                if(error.networkResponse != null){
+                    Log.e("Erro", "Error code: " + String.valueOf(error.networkResponse.statusCode));
+                } else {
+                    Log.e("Erro", "Error: " + error.toString());
+                }
+
+
             }
         }) {
             @Override
@@ -89,10 +95,8 @@ public class MedicoWS {
             }
         };
         getRequest.setRetryPolicy(new
-
                 DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(getRequest);
 
     }
-
-    }
+}

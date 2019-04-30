@@ -12,8 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pethealth.Dao.MedicoDAO;
-import com.example.pethealth.Model.Medico;
+import com.example.pethealth.Dao.ClienteDAO;
+import com.example.pethealth.Model.Cliente;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -24,30 +24,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MedicoWS {
+public class ClienteWs {
 
-    private MedicoDAO db;
 
-    public static void listarMedico(final Context contexto, String path) {
+    private ClienteDAO db;
+
+    public static void listarCliente(final Context contexto, String path) {
         RequestQueue queue = Volley.newRequestQueue(contexto);
         final JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONArray>() {
-
             @Override
             public void onResponse(JSONArray response) {
-
-                MedicoDAO db = new MedicoDAO(contexto);
+                ClienteDAO db = new ClienteDAO(contexto);
 
                 try {
-                    List<Medico> list = new Gson().fromJson(response.toString(), new TypeToken<List<Medico>>() {
+                    List<Cliente> list = new Gson().fromJson(response.toString(), new TypeToken<List<Cliente>>() {
                     }.getType());
 
                     if (list.isEmpty()) {
                         Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
                     } else {
 
-                        if (db.findAllMedico().size() > 0) {
+                        if (db.findAllCliente().size() > 0) {
 
-                            List<Medico> listDataBase = db.findAllMedico();
+                            List<Cliente> listDataBase = db.findAllCliente();
                             int cont = 0;
 
                             for (int i = 0; i < list.size(); i++) {
@@ -95,4 +94,4 @@ public class MedicoWS {
 
     }
 
-    }
+}

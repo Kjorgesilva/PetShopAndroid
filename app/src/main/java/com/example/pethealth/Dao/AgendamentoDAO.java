@@ -35,12 +35,12 @@ public class AgendamentoDAO {
 
     public long inserir(Agenda cadastro) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("animal", cadastro.getAnimal().getNome());
-        contentValues.put("cliente", cadastro.getCliente().getNome());
+        contentValues.put("id_animal", cadastro.getAnimal().getId());
+        contentValues.put("id_cliente", cadastro.getCliente().getId());
         contentValues.put("dataInicio", cadastro.getDataInicio());
-        contentValues.put("endereco", cadastro.getEndereco().getRua());
+        contentValues.put("id_endereco", cadastro.getEndereco().getId());
         contentValues.put("dataFim", cadastro.getDataFim());
-        contentValues.put("medico", cadastro.getMedico().getNome());
+        contentValues.put("id_medico", cadastro.getMedico().getId());
 
         return getDabase().insert("agenda", null, contentValues);
     }

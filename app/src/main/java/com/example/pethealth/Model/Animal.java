@@ -12,8 +12,8 @@ public class Animal implements Serializable {
     private String sexo;
     private String paisOrigem;
     private String observacoes;
-    private Cliente cliente;
-    private EspecieAnimal idEspecieAnimal;
+    private int idCliente;
+    private int idEspecieAnimal;
 
 
     public Animal() {
@@ -83,19 +83,19 @@ public class Animal implements Serializable {
         this.observacoes = observacoes;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public EspecieAnimal getIdEspecieAnimal() {
+    public int getIdEspecieAnimal() {
         return idEspecieAnimal;
     }
 
-    public void setIdEspecieAnimal(EspecieAnimal idEspecieAnimal) {
+    public void setIdEspecieAnimal(int idEspecieAnimal) {
         this.idEspecieAnimal = idEspecieAnimal;
     }
 }

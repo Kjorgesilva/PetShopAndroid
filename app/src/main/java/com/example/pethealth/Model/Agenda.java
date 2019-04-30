@@ -16,16 +16,15 @@ public class Agenda implements Serializable {
 
     }
 
-    public Agenda(Animal idAnimal, Cliente idCliente, Endereco idEndereco, String data, Medico idMedico, String dataFim) {
-        this.animal=idAnimal;
-        this.cliente = idCliente;
+    public Agenda(Animal id_animal, Cliente id_cliente, Endereco id_endereco, String data, Medico id_medico, String dataFim) {
+        this.animal=id_animal;
+        this.cliente = id_cliente;
         this.dataInicio = data;
         this.dataFim = dataFim;
-        this.endereco = idEndereco;
-        this.medico = idMedico;
+        this.endereco = id_endereco;
+        this.medico = id_medico;
 
     }
-
 
     public int getId() {
         return id;
