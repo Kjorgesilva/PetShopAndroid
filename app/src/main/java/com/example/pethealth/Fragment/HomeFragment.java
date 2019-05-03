@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.pethealth.Adapter.AdapterAgendamento;
 import com.example.pethealth.Dao.AgendamentoDAO;
+import com.example.pethealth.Dao.AnimalDAO;
+import com.example.pethealth.Model.Animal;
 import com.example.pethealth.R;
 
 /**
@@ -23,12 +26,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private AgendamentoDAO db = new AgendamentoDAO(getContext());
     private Context context;
-    private AdapterAgendamento adapterAgendamento;
 
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    public HomeFragment() {}
 
 
     @Override
@@ -45,6 +45,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(new AdapterAgendamento(getContext(), db.ListarBanco(), clickListner()));
 
 
+
+
         return view;
     }
 
@@ -52,31 +54,28 @@ public class HomeFragment extends Fragment {
         return new AdapterAgendamento.AgendamentoOnClickListner() {
             @Override
             public void onLongClick(View view, final int position) {
-
-                AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
-                alerta.setTitle("Atenção");
-                alerta.setMessage("Deseja excluir a consulta ?");
-                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int id = db.ListarBanco().get(position).getId();
-                        db.delete(id);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        adapterAgendamento = new AdapterAgendamento(getContext(), db.ListarBanco(), clickListner());
-                        recyclerView.setAdapter(adapterAgendamento);
-                    }
-                });
-                alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-
-                alerta.show();
-
-
-            }
+//                AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
+//                alerta.setTitle("Atenção");
+//                alerta.setMessage("Deseja excluir a consulta ?");
+//                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        int id = db.ListarBanco().get(position).getId();
+//                        db.delete(id);
+//                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                        AdapterAgendamento adapterAgendamento = new AdapterAgendamento(getContext(), db.ListarBanco(), clickListner());
+//                        recyclerView.setAdapter(adapterAgendamento);
+//                    }
+//                });
+//                alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
+//
+//                alerta.show();
+   }
 
             @Override
             public void clickListenerView(View view, int index) {

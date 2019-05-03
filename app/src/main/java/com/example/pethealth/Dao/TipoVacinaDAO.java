@@ -26,7 +26,7 @@ public class TipoVacinaDAO {
 
     public long inserir(TipoVacinas cadastro) {
         ContentValues contentValues = new ContentValues();
-  //        db.execSQL("CREATE TABLE tipoVacina(_id INTEGER PRIMARY KEY, descricao TEXT )");
+  //        db.execSQL("CREATE TABLE tipoVacina(_id_tipoVacina INTEGER PRIMARY KEY, descricao TEXT )");
         contentValues.put("descricao", cadastro.getDescricao());
         return getDabase().insert("tipoVacina", null, contentValues);
     }

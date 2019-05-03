@@ -11,33 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pethealth.Model.Animal;
 import com.example.pethealth.Model.Vacinas;
 import com.example.pethealth.R;
 import com.example.pethealth.WebService.VacinasWs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterVacinas extends RecyclerView.Adapter<AdapterVacinas.VacinasHolder> {
+    private Context contexto ;
     private List<Vacinas> list;
-    private Context contexto;
     private VacinasOnclickListener vacinasOnclickListener;
 
-    public AdapterVacinas(List<Vacinas> list, Context contexto, VacinasOnclickListener vacinasOnclickListener) {
-        this.list = list;
+    public AdapterVacinas(Context contexto, List<Vacinas> list, VacinasOnclickListener vacinasOnclickListener) {
         this.contexto = contexto;
+        this.list = list;
         this.vacinasOnclickListener = vacinasOnclickListener;
     }
-
-    public AdapterVacinas(Context context, List<Vacinas> listaTeste, VacinasOnclickListener vacinasOnclickListener) {
-        this.contexto = context;
-        this.list = listaTeste;
-        this.vacinasOnclickListener = vacinasOnclickListener;
-    }
-
-
-
 
     public AdapterVacinas.VacinasHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_vacinas, parent, false);
@@ -45,30 +38,32 @@ public class AdapterVacinas extends RecyclerView.Adapter<AdapterVacinas.VacinasH
         return holder;
     }
 
-        @Override
+    @Override
     public void onBindViewHolder(@NonNull final AdapterVacinas.VacinasHolder holder, final int position) {
 
-            holder.txt_nome_animal.setText(list.get(position).getNomeAnimal().toUpperCase());
-            holder.txt_descricao_animal.setText(list.get(position).getNomeVacina());
-            holder.txt_data_animal.setText(list.get(position).getDataVacina());
 
-            if (vacinasOnclickListener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+
+        holder.txt_nome_animal.setText(list.get(position).getNomeAnimal().toUpperCase());
+        holder.txt_descricao_animal.setText(list.get(position).getNomeVacina());
+        holder.txt_data_animal.setText(list.get(position).getDataVacina());
+
+        if (vacinasOnclickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 //                    possição do card
-                        vacinasOnclickListener.vacinasOnclickListener(holder.itemView, position);
-                    }
-                });
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        vacinasOnclickListener.vacinasOnclickListener(holder.itemView, position);
-                        return true;
-                    }
-                });
+                    vacinasOnclickListener.vacinasOnclickListener(holder.itemView, position);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    vacinasOnclickListener.vacinasOnclickListener(holder.itemView, position);
+                    return true;
+                }
+            });
 
-            }
+        }
     }
 
     @Override
@@ -89,7 +84,7 @@ public class AdapterVacinas extends RecyclerView.Adapter<AdapterVacinas.VacinasH
     public static class VacinasHolder extends RecyclerView.ViewHolder {
 
         View view;
-        TextView txt_nome_animal, txt_descricao_animal, txt_data_animal ;
+        TextView txt_nome_animal, txt_descricao_animal, txt_data_animal;
         CardView cardViewAnimal;
 
 
@@ -103,7 +98,6 @@ public class AdapterVacinas extends RecyclerView.Adapter<AdapterVacinas.VacinasH
             cardViewAnimal = view.findViewById(R.id.cardViewAnimal);
 
         }
-
 
 
     }

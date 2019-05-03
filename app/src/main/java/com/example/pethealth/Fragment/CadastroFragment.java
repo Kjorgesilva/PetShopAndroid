@@ -241,21 +241,20 @@ public class CadastroFragment extends Fragment {
                     tvSpinner.setError("Preencha o campo");
                 } else {
 
-
-
                     String data = (edt_data.getText().toString() + " " + horario);
                     String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
 
-                    db.inserir(new Agenda(animal, cliente, endereco, data, medico, dataFim));
+
+
+                    db.inserir(new Agenda(animal,cliente, endereco, data, medico, dataFim));
 
                     List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
                     int id = agenda.get(agenda.size() - 1).getId();
 
+                    Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(getContext(), "Agenda Agendada", Toast.LENGTH_LONG).show();
 
-                   cadValor( id, id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
-
+                  // cadValor( id, id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
 
                     edt_nome_animal.setText("");
                     edt_nome_dono.setText("");
@@ -298,14 +297,13 @@ public class CadastroFragment extends Fragment {
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                tvSpinner.setText(listaMedico.get(i).getNome());
+                tvSpinner.setText(listaMedico.get(i).getNome().toUpperCase());
                 id_medico = listaMedico.get(i).getId();
                 medico = listaMedico.get(i);
             }
         });
         alert.show();
     }
-
     public void showDialogEndereco() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Endereço:");
@@ -316,7 +314,7 @@ public class CadastroFragment extends Fragment {
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                edt_endereco.setText(listaEndereco.get(i).getRua());
+                edt_endereco.setText(listaEndereco.get(i).getRua().toUpperCase());
                 id_endereco = listaEndereco.get(i).getId();
                 endereco = listaEndereco.get(i);
             }
@@ -335,14 +333,13 @@ public class CadastroFragment extends Fragment {
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                edt_nome_dono.setText(listaCliente.get(i).getNome());
+                edt_nome_dono.setText(listaCliente.get(i).getNome().toUpperCase());
                 id_cliente = listaCliente.get(i).getId();
                 cliente =listaCliente.get(i);
             }
         });
         alert.show();
     }
-
     public void showDialogAnimal() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Animal:");
@@ -353,7 +350,7 @@ public class CadastroFragment extends Fragment {
         alert.setItems(itens, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                edt_nome_animal.setText(listaAnimal.get(i).getNome());
+                edt_nome_animal.setText(listaAnimal.get(i).getNome().toUpperCase());
                 id_animal = listaAnimal.get(i).getId();
                 animal = listaAnimal.get(i);
             }

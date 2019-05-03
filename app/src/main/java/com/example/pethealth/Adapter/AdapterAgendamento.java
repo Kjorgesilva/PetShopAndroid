@@ -5,10 +5,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.R;
@@ -36,9 +38,11 @@ public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.
 
     @Override
     public void onBindViewHolder(@NonNull final AdapterAgendamento.AgendamentoHolder holder, final int position) {
-        holder.txt_nome.setText("teste");
-        holder.txt_medico.setText("teste2");
+        holder.txt_nome.setText(list.get(position).getAnimal().getNome().toUpperCase());
+        holder.txt_medico.setText(list.get(position).getMedico().getNome());
         holder.txt_data.setText(list.get(position).getDataInicio());
+
+        Log.e("Nome","nome animal: " + list.get(position).getAnimal().getNome());
 
         if (AgendamentoOnClickListner != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -90,10 +94,11 @@ public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.
         public AgendamentoHolder(View itemView) {
             super(itemView);
             this.view = itemView;
-            txt_nome = view.findViewById(R.id.txt_nome);
+            txt_nome = view.findViewById(R.id.txt_nome_do_animal);
             txt_medico = view.findViewById(R.id.txt_medico);
             txt_data = view.findViewById(R.id.txt_data);
             cardView = view.findViewById(R.id.cardView);
+
         }
     }
 }

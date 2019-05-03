@@ -35,31 +35,31 @@ public class AgendamentoDAO {
 
     public long inserir(Agenda cadastro) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("id_animal", cadastro.getAnimal().getId());
-        contentValues.put("id_cliente", cadastro.getCliente().getId());
-        contentValues.put("dataInicio", cadastro.getDataInicio());
-        contentValues.put("id_endereco", cadastro.getEndereco().getId());
-        contentValues.put("dataFim", cadastro.getDataFim());
-        contentValues.put("id_medico", cadastro.getMedico().getId());
+        contentValues.put("id_animal_agenda", cadastro.getAnimal().getId());
+        contentValues.put("id_cliente_agenda", cadastro.getCliente().getId());
+        contentValues.put("dataInicio_agenda", cadastro.getDataInicio());
+        contentValues.put("id_endereco_agenda", cadastro.getEndereco().getId());
+        contentValues.put("dataFim_agenda", cadastro.getDataFim());
+        contentValues.put("id_medico_agenda", cadastro.getMedico().getId());
+
+        Log.e("Nome: ", "Texto: " + cadastro.getAnimal().getNome());
 
         return getDabase().insert("agenda", null, contentValues);
     }
-
-    //
 
 
     public List<Agenda> ListarBanco() {
         List<Agenda> listarTodosOsElementos = new ArrayList<Agenda>();
         // fazer um inner join
-        Cursor cursor = getDabase().rawQuery("SELECT con._id, con.id_animal, con.id_cliente, con.dataInicio,con.id_endereco , con.dataFim, con.id_medico ," +
-                "ani.nome, ani.raca, ani.cor, ani.dataNascimento, ani.sexo, ani.paisOrigem, ani.observacoes, cli.nome, cli.rg, cli.endereco, cli.telefone, cli.email ," +
-                "ende.rua, ende.cidade, ende.bairro, ende.estado, med.nome, med.telefone, med.email" +
+        Cursor cursor = getDabase().rawQuery("SELECT con._id_agenda, con.id_animal_agenda, con.id_cliente_agenda, con.dataInicio_agenda,con.id_endereco_agenda , con.dataFim_agenda, con.id_medico_agenda ," +
+                "ani.nome_animal, ani.raca_animal, ani.cor_animal, ani.dataNascimento_animal, ani.sexo_animal, ani.paisOrigem_animal, ani.observacoes_animal, cli.nome_cliente, cli.rg_cliente, cli.endereco_cliente, cli.telefone_cliente, cli.email_cliente ," +
+                "ende.rua_endereco, ende.cidade_endereco, ende.bairro_endereco, ende.estado_endereco, med.nome_medico, med.telefone_medico, med.email_medico" +
                 " FROM agenda con" +
-                " INNER JOIN animal ani ON con.id_animal = ani._id " +
-                " INNER JOIN cliente cli ON con.id_cliente = cli._id " +
-                " INNER JOIN endereco ende ON con.id_endereco = ende._id " +
-                " INNER JOIN medico med ON con.id_medico = med._id " +
-                " ORDER BY con._id", null);
+                " INNER JOIN animal ani ON con.id_animal_agenda = ani._id_animal " +
+                " INNER JOIN cliente cli ON con.id_cliente_agenda = cli._id_cliente " +
+                " INNER JOIN endereco ende ON con.id_endereco_agenda = ende._id_endereco " +
+                " INNER JOIN medico med ON con.id_medico_agenda = med._id_medico " +
+                " ORDER BY con._id_agenda", null);
         while (cursor.moveToNext()) {
             Agenda listarCadastro = new Agenda();
             Animal listAnimal = new Animal();
@@ -68,52 +68,52 @@ public class AgendamentoDAO {
             Medico listMedico = new Medico();
 
             //Animal
-            listAnimal.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            listAnimal.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-            listAnimal.setCor(cursor.getString(cursor.getColumnIndex("cor")));
-            listAnimal.setDataNascimento(cursor.getString(cursor.getColumnIndex("dataNascimento")));
-            listAnimal.setObservacoes(cursor.getString(cursor.getColumnIndex("observacoes")));
-            listAnimal.setPaisOrigem(cursor.getString(cursor.getColumnIndex("paisOrigem")));
-            listAnimal.setRaca(cursor.getString(cursor.getColumnIndex("raca")));
-            listAnimal.setSexo(cursor.getString(cursor.getColumnIndex("sexo")));
+            listAnimal.setId(cursor.getInt(cursor.getColumnIndex("_id_animal")));
+            listAnimal.setNome(cursor.getString(cursor.getColumnIndex("nome_animal")));
+            listAnimal.setCor(cursor.getString(cursor.getColumnIndex("cor_animal")));
+            listAnimal.setDataNascimento(cursor.getString(cursor.getColumnIndex("dataNascimento_animal")));
+            listAnimal.setObservacoes(cursor.getString(cursor.getColumnIndex("observacoes_animal")));
+            listAnimal.setPaisOrigem(cursor.getString(cursor.getColumnIndex("paisOrigem_animal")));
+            listAnimal.setRaca(cursor.getString(cursor.getColumnIndex("raca_animal")));
+            listAnimal.setSexo(cursor.getString(cursor.getColumnIndex("sexo_animal")));
+
+            Log.e("nome", "passou : " + listAnimal.getNome());
+            Log.e("nome", "passou : " + listAnimal.getId());
+
+
 
             //Cliente
-            listCliente.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            listCliente.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-            listCliente.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            listCliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
-            listCliente.setRg(cursor.getString(cursor.getColumnIndex("rg")));
-            listCliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+            listCliente.setId(cursor.getInt(cursor.getColumnIndex("_id_cliente")));
+            listCliente.setNome(cursor.getString(cursor.getColumnIndex("nome_cliente")));
+            listCliente.setEmail(cursor.getString(cursor.getColumnIndex("email_cliente")));
+            listCliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco_cliente")));
+            listCliente.setRg(cursor.getString(cursor.getColumnIndex("rg_cliente")));
+            listCliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_cliente")));
 
 
             //Endereco
-            listEndereco.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            listEndereco.setBairro(cursor.getString(cursor.getColumnIndex("bairro")));
-            listEndereco.setCidade(cursor.getString(cursor.getColumnIndex("cidade")));
-            listEndereco.setEstado(cursor.getString(cursor.getColumnIndex("estado")));
-            listEndereco.setRua(cursor.getString(cursor.getColumnIndex("rua")));
+            listEndereco.setId(cursor.getInt(cursor.getColumnIndex("_id_endereco")));
+            listEndereco.setBairro(cursor.getString(cursor.getColumnIndex("bairro_endereco")));
+            listEndereco.setCidade(cursor.getString(cursor.getColumnIndex("cidade_endereco")));
+            listEndereco.setEstado(cursor.getString(cursor.getColumnIndex("estado_endereco")));
+            listEndereco.setRua(cursor.getString(cursor.getColumnIndex("rua_endereco")));
 
 
             //Medico
-            listMedico.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            listMedico.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-            listMedico.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            listMedico.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+            listMedico.setId(cursor.getInt(cursor.getColumnIndex("_id_medico")));
+            listMedico.setNome(cursor.getString(cursor.getColumnIndex("nome_medico")));
+            listMedico.setEmail(cursor.getString(cursor.getColumnIndex("email_medico")));
+            listMedico.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_medico")));
 
 
 
-
-
-
-
-
-            listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id_agenda")));
             listarCadastro.setAnimal(listAnimal);
             listarCadastro.setCliente(listCliente);
             listarCadastro.setEndereco(listEndereco);
             listarCadastro.setMedico(listMedico);
-            listarCadastro.setDataInicio(cursor.getString(cursor.getColumnIndex("dataInicio")));
-            listarCadastro.setDataFim((cursor.getString(cursor.getColumnIndex("dataFim"))));
+            listarCadastro.setDataInicio(cursor.getString(cursor.getColumnIndex("dataInicio_agenda")));
+            listarCadastro.setDataFim((cursor.getString(cursor.getColumnIndex("dataFim_agenda"))));
 
 
 
@@ -127,6 +127,7 @@ public class AgendamentoDAO {
         Log.e("listar", "foi " + listarTodosOsElementos.size());
         return listarTodosOsElementos;
     }
+
 
 //    public long update(Agenda agendamento) {
 //

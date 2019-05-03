@@ -28,7 +28,7 @@ public class VacinasFragment extends Fragment {
 
     private Context contexto;
     private RecyclerView recyclerView;
-    private List<Vacinas> listaTeste = new ArrayList<>();
+    private List<Vacinas> listaVacina = new ArrayList<>();
     private VacinasDAO db;
 
 
@@ -44,17 +44,17 @@ public class VacinasFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_vacinas, container, false);
         contexto = getContext();
-        db = new VacinasDAO(getContext());
+        db = new VacinasDAO(contexto);
 
-        listaTeste.addAll(db.findAllVacinas());
+        listaVacina.addAll(db.findAllVacinas());
         VacinasWs.listarVacinas(contexto, "vacinacao/listavacinas");
 
-        if (listaTeste.isEmpty()){
+        if (listaVacina.isEmpty()){
             Toast.makeText(contexto,"Lista Vazia",Toast.LENGTH_LONG).show();
         }else {
             recyclerView = view.findViewById(R.id.recyclerViewAnimal);
             recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
-            recyclerView.setAdapter(new AdapterVacinas(contexto, listaTeste, clickListner()));
+            recyclerView.setAdapter(new AdapterVacinas(contexto,listaVacina,clickListner()));
 
 
         }

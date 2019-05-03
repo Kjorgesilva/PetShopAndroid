@@ -33,13 +33,12 @@ public class ClienteDAO  {
 
     public long inserir(Cliente cadastro) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("_id", cadastro.getId());
-        contentValues.put("nome", cadastro.getNome());
-        contentValues.put("rg",cadastro.getRg());
-        contentValues.put("endereco", cadastro.getEndereco());
-        contentValues.put("telefone", cadastro.getTelefone());
-        contentValues.put("email", cadastro.getEmail());
-        contentValues.put("idUsuario", cadastro.getIdUsuario());
+        contentValues.put("nome_cliente", cadastro.getNome());
+        contentValues.put("rg_cliente",cadastro.getRg());
+        contentValues.put("endereco_cliente", cadastro.getEndereco());
+        contentValues.put("telefone_cliente", cadastro.getTelefone());
+        contentValues.put("email_cliente", cadastro.getEmail());
+        contentValues.put("idUsuario_cliente", cadastro.getIdUsuario());
         Log.e("teste","teste"+ cadastro.getNome());
 
 
@@ -50,17 +49,17 @@ public class ClienteDAO  {
 
     public List<Cliente> findAllCliente() {
         List<Cliente> listarTodosCleinte = new ArrayList<>();
-        Cursor cursor = getDabase().rawQuery("SELECT * FROM cliente ORDER BY _id", null);
+        Cursor cursor = getDabase().rawQuery("SELECT * FROM cliente ORDER BY _id_cliente", null);
         while (cursor.moveToNext()) {
             Cliente cliente = new Cliente();
 
-            cliente.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            cliente.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-            cliente.setRg(cursor.getString(cursor.getColumnIndex("rg")));
-            cliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
-            cliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
-            cliente.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            cliente.setIdUsuario(cursor.getInt(cursor.getColumnIndex("idUsuario")));
+            cliente.setId(cursor.getInt(cursor.getColumnIndex("_id_cliente")));
+            cliente.setNome(cursor.getString(cursor.getColumnIndex("nome_cliente")));
+            cliente.setRg(cursor.getString(cursor.getColumnIndex("rg_cliente")));
+            cliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco_cliente")));
+            cliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_cliente")));
+            cliente.setEmail(cursor.getString(cursor.getColumnIndex("email_cliente")));
+            cliente.setIdUsuario(cursor.getInt(cursor.getColumnIndex("idUsuario_cliente")));
 
             listarTodosCleinte.add(cliente);
         }

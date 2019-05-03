@@ -7,4 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="cinza">#7E7D7D</color>
     <color name="painel">#D1D1D1</color>
+    <color name="red">#FF0000</color>
+    <color name="grren">#17B81E</color>
+
 </resources>

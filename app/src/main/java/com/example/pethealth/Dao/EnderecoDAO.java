@@ -30,11 +30,10 @@ public class EnderecoDAO {
 
     public long inserir(Endereco cadastro) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("_id", cadastro.getId());
-        contentValues.put("rua", cadastro.getRua());
-        contentValues.put("cidade", cadastro.getCidade());
-        contentValues.put("bairro", cadastro.getBairro());
-        contentValues.put("estado", cadastro.getEstado());
+        contentValues.put("rua_endereco", cadastro.getRua());
+        contentValues.put("cidade_endereco", cadastro.getCidade());
+        contentValues.put("bairro_endereco", cadastro.getBairro());
+        contentValues.put("estado_endereco", cadastro.getEstado());
         Log.e("tamanho", "Lista Tamanho" + cadastro.getRua());
 
 
@@ -44,15 +43,15 @@ public class EnderecoDAO {
     public List<Endereco> findAllEndereco() {
         Log.e("tamanho", "Lista Tamanho");
         List<Endereco> listarTodosEndereco = new ArrayList<>();
-        Cursor cursor = getDabase().rawQuery("SELECT * FROM endereco ORDER BY _id", null);
+        Cursor cursor = getDabase().rawQuery("SELECT * FROM endereco ORDER BY _id_endereco", null);
         try {
             while (cursor.moveToNext()) {
                 Endereco endereco = new Endereco();
-                endereco.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-                endereco.setRua((cursor.getString(cursor.getColumnIndex("rua"))));
-                endereco.setCidade((cursor.getString(cursor.getColumnIndex("cidade"))));
-                endereco.setBairro((cursor.getString(cursor.getColumnIndex("bairro"))));
-                endereco.setEstado((cursor.getString(cursor.getColumnIndex("estado"))));
+                endereco.setId(cursor.getInt(cursor.getColumnIndex("_id_endereco")));
+                endereco.setRua((cursor.getString(cursor.getColumnIndex("rua_endereco"))));
+                endereco.setCidade((cursor.getString(cursor.getColumnIndex("cidade_endereco"))));
+                endereco.setBairro((cursor.getString(cursor.getColumnIndex("bairro_endereco"))));
+                endereco.setEstado((cursor.getString(cursor.getColumnIndex("estado_endereco"))));
                 listarTodosEndereco.add(endereco);
 
                 Log.e("tamanho", "Lista Tamanho" + listarTodosEndereco.size());

@@ -28,34 +28,34 @@ public class AnimalDAO {
     public long inserir(Animal cadastro) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("nome", cadastro.getNome());
-        contentValues.put("raca", cadastro.getNome());
-        contentValues.put("cor", cadastro.getNome());
-        contentValues.put("dataNascimento", cadastro.getNome());
-        contentValues.put("paisOrigem", cadastro.getNome());
-        contentValues.put("observacoes", cadastro.getNome());
-        contentValues.put("idCliente", cadastro.getIdCliente());
-        contentValues.put("idEspecieAnimal", cadastro.getIdEspecieAnimal());
+        contentValues.put("nome_animal", cadastro.getNome());
+        contentValues.put("raca_animal", cadastro.getRaca());
+        contentValues.put("cor_animal", cadastro.getCor());
+        contentValues.put("dataNascimento_animal", cadastro.getDataNascimento());
+        contentValues.put("paisOrigem_animal", cadastro.getPaisOrigem());
+        contentValues.put("observacoes_animal", cadastro.getObservacoes());
+        contentValues.put("idCliente_animal", cadastro.getIdCliente());
+        contentValues.put("idEspecieAnimal_animal", cadastro.getIdEspecieAnimal());
 
         return getDabase().insert("animal", null, contentValues);
     }
 
     public List<Animal> findAllAnimal() {
         List<Animal> listarTodosAnimal = new ArrayList<>();
-        Cursor cursor = getDabase().rawQuery("SELECT * FROM animal ORDER BY _id", null);
+        Cursor cursor = getDabase().rawQuery("SELECT * FROM animal ORDER BY _id_animal", null);
         while (cursor.moveToNext()) {
             Animal animal = new Animal();
 
-            animal.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            animal.setNome((cursor.getString(cursor.getColumnIndex("nome"))));
-            animal.setRaca(cursor.getString(cursor.getColumnIndex("raca")));
-            animal.setCor(cursor.getString(cursor.getColumnIndex("cor")));
-            animal.setDataNascimento(cursor.getString(cursor.getColumnIndex("dataNascimento")));
-            animal.setSexo(cursor.getString(cursor.getColumnIndex("sexo")));
-            animal.setPaisOrigem(cursor.getString(cursor.getColumnIndex("paisOrigem")));
-            animal.setObservacoes(cursor.getString(cursor.getColumnIndex("observacoes")));
-            animal.setIdCliente(cursor.getInt(cursor.getColumnIndex("idCliente")));
-            animal.setIdEspecieAnimal(cursor.getInt(cursor.getColumnIndex("idEspecieAnimal")));
+            animal.setId(cursor.getInt(cursor.getColumnIndex("_id_animal")));
+            animal.setNome((cursor.getString(cursor.getColumnIndex("nome_animal"))));
+            animal.setRaca(cursor.getString(cursor.getColumnIndex("raca_animal")));
+            animal.setCor(cursor.getString(cursor.getColumnIndex("cor_animal")));
+            animal.setDataNascimento(cursor.getString(cursor.getColumnIndex("dataNascimento_animal")));
+            animal.setSexo(cursor.getString(cursor.getColumnIndex("sexo_animal")));
+            animal.setPaisOrigem(cursor.getString(cursor.getColumnIndex("paisOrigem_animal")));
+            animal.setObservacoes(cursor.getString(cursor.getColumnIndex("observacoes_animal")));
+            animal.setIdCliente(cursor.getInt(cursor.getColumnIndex("idCliente_animal")));
+            animal.setIdEspecieAnimal(cursor.getInt(cursor.getColumnIndex("idEspecieAnimal_animal")));
 
 
             listarTodosAnimal.add(animal);

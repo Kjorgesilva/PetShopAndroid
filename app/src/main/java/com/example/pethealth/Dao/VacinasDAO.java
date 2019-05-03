@@ -34,14 +34,14 @@ public class VacinasDAO {
     public long inserir(Vacinas cadastro) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("_id", cadastro.getId());
-        contentValues.put("aviso", cadastro.getAviso());
-        contentValues.put("dataVacina", cadastro.getDataVacina());
-        contentValues.put("dataDaProxima", cadastro.getDataDaProxima());
-        contentValues.put("idAnimal", cadastro.getIdAnimal());
-        contentValues.put("idTipoVacina", cadastro.getIdTipoVacina());
-        contentValues.put("nomeAnimal", cadastro.getNomeAnimal());
-        contentValues.put("nomeVacina", cadastro.getNomeVacina());
+        contentValues.put("_id_vacinas", cadastro.getId());
+        contentValues.put("aviso_vacinas", cadastro.getAviso());
+        contentValues.put("dataVacina_vacinas", cadastro.getDataVacina());
+        contentValues.put("dataDaProxima_vacinas", cadastro.getDataDaProxima());
+        contentValues.put("idAnimal_vacinas", cadastro.getIdAnimal());
+        contentValues.put("idTipoVacina_vacinas", cadastro.getIdTipoVacina());
+        contentValues.put("nomeAnimal_vacinas", cadastro.getNomeAnimal());
+        contentValues.put("nomeVacina_vacinas", cadastro.getNomeVacina());
 
 
         return getDabase().insert("vacinas", null, contentValues);
@@ -50,20 +50,20 @@ public class VacinasDAO {
 
     public List<Vacinas> findAllVacinas() {
         List<Vacinas> listatodasVacinas = new ArrayList<>();
-        Cursor cursor = getDabase().rawQuery("SELECT * FROM vacinas ORDER BY _id", null);
+        Cursor cursor = getDabase().rawQuery("SELECT * FROM vacinas ORDER BY _id_vacinas", null);
 
         while (cursor.moveToNext()) {
             Vacinas listaVacina = new Vacinas();
 
 
-            listaVacina.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            listaVacina.setAviso((cursor.getString(cursor.getColumnIndex("aviso"))));
-            listaVacina.setDataVacina((cursor.getString(cursor.getColumnIndex("dataVacina"))));
-            listaVacina.setDataDaProxima((cursor.getString(cursor.getColumnIndex("dataDaProxima"))));
-            listaVacina.setIdAnimal(cursor.getInt(cursor.getColumnIndex("idAnimal")));
-            listaVacina.setIdTipoVacina(cursor.getInt(cursor.getColumnIndex("idTipoVacina")));
-            listaVacina.setNomeAnimal((cursor.getString(cursor.getColumnIndex("nomeAnimal"))));
-            listaVacina.setNomeVacina((cursor.getString(cursor.getColumnIndex("nomeVacina"))));
+            listaVacina.setId(cursor.getInt(cursor.getColumnIndex("_id_vacinas")));
+            listaVacina.setAviso((cursor.getString(cursor.getColumnIndex("aviso_vacinas"))));
+            listaVacina.setDataVacina((cursor.getString(cursor.getColumnIndex("dataVacina_vacinas"))));
+            listaVacina.setDataDaProxima((cursor.getString(cursor.getColumnIndex("dataDaProxima_vacinas"))));
+            listaVacina.setIdAnimal(cursor.getInt(cursor.getColumnIndex("idAnimal_vacinas")));
+            listaVacina.setIdTipoVacina(cursor.getInt(cursor.getColumnIndex("idTipoVacina_vacinas")));
+            listaVacina.setNomeAnimal((cursor.getString(cursor.getColumnIndex("nomeAnimal_vacinas"))));
+            listaVacina.setNomeVacina((cursor.getString(cursor.getColumnIndex("nomeVacina_vacinas"))));
 
 
             listatodasVacinas.add(listaVacina);
