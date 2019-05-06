@@ -246,14 +246,14 @@ public class CadastroFragment extends Fragment {
 
                     db.inserir(new Agenda(animal,cliente, endereco, data, medico, dataFim));
 
-//                    List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
+//                   List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
 //                   int id = agenda.get(agenda.size() - 1).getId();
 
 
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 
 
-                  // cadValor( id, id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
+                   cadValor(id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
 
                     edt_nome_animal.setText("");
                     edt_nome_dono.setText("");
@@ -270,10 +270,10 @@ public class CadastroFragment extends Fragment {
         return view;
     }
 
-    private void cadValor(int id,int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim) {
+    private void cadValor(int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("id",String.valueOf(id));
+
         map.put("id_animal", String.valueOf(id_animal));
         map.put("id_cliente", String.valueOf(id_cliente));
         map.put("id_endereco", String.valueOf(id_endereco));
