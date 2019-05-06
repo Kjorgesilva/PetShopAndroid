@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         context = this.getContext();
         db = new AgendamentoDAO(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterAgendamento(getContext(), db.ListarBanco(), clickListner()));
+        recyclerView.setAdapter(new AdapterAgendamento(context, db.ListarBanco(), clickListner()));
 
 
 

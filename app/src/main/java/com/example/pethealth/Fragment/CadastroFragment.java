@@ -244,12 +244,11 @@ public class CadastroFragment extends Fragment {
                     String data = (edt_data.getText().toString() + " " + horario);
                     String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
 
-
-
                     db.inserir(new Agenda(animal,cliente, endereco, data, medico, dataFim));
 
-                    List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
-                    int id = agenda.get(agenda.size() - 1).getId();
+//                    List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
+//                   int id = agenda.get(agenda.size() - 1).getId();
+
 
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 

@@ -52,7 +52,7 @@ public class AgendamentoDAO {
         List<Agenda> listarTodosOsElementos = new ArrayList<Agenda>();
         // fazer um inner join
         Cursor cursor = getDabase().rawQuery("SELECT con._id_agenda, con.id_animal_agenda, con.id_cliente_agenda, con.dataInicio_agenda,con.id_endereco_agenda , con.dataFim_agenda, con.id_medico_agenda ," +
-                "ani.nome_animal, ani.raca_animal, ani.cor_animal, ani.dataNascimento_animal, ani.sexo_animal, ani.paisOrigem_animal, ani.observacoes_animal, cli.nome_cliente, cli.rg_cliente, cli.endereco_cliente, cli.telefone_cliente, cli.email_cliente ," +
+                "ani.nome_animal, ani.raca_animal, ani.cor_animal, ani.dataNascimento_animal, ani.sexo_animal, ani.paisOrigem_animal, ani.observacoes_animal,cli.nome_cliente, cli.rg_cliente, cli.endereco_cliente, cli.telefone_cliente, cli.email_cliente ," +
                 "ende.rua_endereco, ende.cidade_endereco, ende.bairro_endereco, ende.estado_endereco, med.nome_medico, med.telefone_medico, med.email_medico" +
                 " FROM agenda con" +
                 " INNER JOIN animal ani ON con.id_animal_agenda = ani._id_animal " +
@@ -68,7 +68,7 @@ public class AgendamentoDAO {
             Medico listMedico = new Medico();
 
             //Animal
-            listAnimal.setId(cursor.getInt(cursor.getColumnIndex("_id_animal")));
+            listAnimal.setId(cursor.getInt(cursor.getColumnIndex("id_animal_agenda")));
             listAnimal.setNome(cursor.getString(cursor.getColumnIndex("nome_animal")));
             listAnimal.setCor(cursor.getString(cursor.getColumnIndex("cor_animal")));
             listAnimal.setDataNascimento(cursor.getString(cursor.getColumnIndex("dataNascimento_animal")));
@@ -83,7 +83,7 @@ public class AgendamentoDAO {
 
 
             //Cliente
-            listCliente.setId(cursor.getInt(cursor.getColumnIndex("_id_cliente")));
+            listCliente.setId(cursor.getInt(cursor.getColumnIndex("id_cliente_agenda")));
             listCliente.setNome(cursor.getString(cursor.getColumnIndex("nome_cliente")));
             listCliente.setEmail(cursor.getString(cursor.getColumnIndex("email_cliente")));
             listCliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco_cliente")));
@@ -92,7 +92,7 @@ public class AgendamentoDAO {
 
 
             //Endereco
-            listEndereco.setId(cursor.getInt(cursor.getColumnIndex("_id_endereco")));
+            listEndereco.setId(cursor.getInt(cursor.getColumnIndex("id_endereco_agenda")));
             listEndereco.setBairro(cursor.getString(cursor.getColumnIndex("bairro_endereco")));
             listEndereco.setCidade(cursor.getString(cursor.getColumnIndex("cidade_endereco")));
             listEndereco.setEstado(cursor.getString(cursor.getColumnIndex("estado_endereco")));
@@ -100,7 +100,7 @@ public class AgendamentoDAO {
 
 
             //Medico
-            listMedico.setId(cursor.getInt(cursor.getColumnIndex("_id_medico")));
+            listMedico.setId(cursor.getInt(cursor.getColumnIndex("id_medico_agenda")));
             listMedico.setNome(cursor.getString(cursor.getColumnIndex("nome_medico")));
             listMedico.setEmail(cursor.getString(cursor.getColumnIndex("email_medico")));
             listMedico.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_medico")));
