@@ -10,48 +10,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.pethealth.Model.Animal;
+import com.example.pethealth.Model.RespostaRelatorio;
 import com.example.pethealth.R;
 
 import java.util.List;
 
 
-public class AdapterAnimal extends RecyclerView.Adapter<AdapterAnimal.RelatorioAnimalHolder> {
-    private List<Animal> list;
+public class AdapterRespostaRelatorio extends RecyclerView.Adapter<AdapterRespostaRelatorio.RespostaRelatorioHolder> {
+    private List<RespostaRelatorio> list;
     private Context contexto;
-    private AnimalOnclickListener animalOnclickListener;
+    private RespostaRelatorioOnclickListener respostaRelatorioOnclickListener;
 
-    public AdapterAnimal(Context contexto, List<Animal> listateste, AnimalOnclickListener clickListner) {
+    public AdapterRespostaRelatorio(Context contexto, List<RespostaRelatorio> lista, RespostaRelatorioOnclickListener clickListner) {
         this.contexto = contexto;
-        this.list = listateste;
-        this.animalOnclickListener = clickListner;
+        this.list = lista;
+        this.respostaRelatorioOnclickListener = clickListner;
     }
 
-    public AdapterAnimal.RelatorioAnimalHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RespostaRelatorioHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_animal, parent, false);
-        RelatorioAnimalHolder holder = new RelatorioAnimalHolder(view);
+        View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_relatorio_resposta, parent, false);
+        RespostaRelatorioHolder holder = new RespostaRelatorioHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterAnimal.RelatorioAnimalHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RespostaRelatorioHolder holder, final int position) {
 
-        holder.txt_animal_nome.setText(list.get(position).getNome().toUpperCase());
-        //holder.txt_nome_medico.setText(list.get(position).getMedico());
+        holder.txt_animal_nome.setText(list.get(position).getResposta());
 
-        if (animalOnclickListener != null) {
+        if (respostaRelatorioOnclickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    possição do card
-                    animalOnclickListener.animalOnclickListener(holder.itemView, position);
+                    respostaRelatorioOnclickListener.animalOnclickListener(holder.itemView, position);
                 }
             });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    animalOnclickListener.animalOnclickListener(holder.itemView, position);
+                    respostaRelatorioOnclickListener.animalOnclickListener(holder.itemView, position);
                     return true;
                 }
             });
@@ -71,18 +69,18 @@ public class AdapterAnimal extends RecyclerView.Adapter<AdapterAnimal.RelatorioA
     }
 
 
-    public interface AnimalOnclickListener {
+    public interface RespostaRelatorioOnclickListener {
         @SuppressLint("NewApi")
         void animalOnclickListener(View view, int index);
     }
 
-    public static class RelatorioAnimalHolder extends RecyclerView.ViewHolder {
+    public static class RespostaRelatorioHolder extends RecyclerView.ViewHolder {
         View view;
         CardView cardView;
         TextView txt_animal_nome, txt_nome_medico;
 
 
-        public RelatorioAnimalHolder(View itemView) {
+        public RespostaRelatorioHolder(View itemView) {
             super(itemView);
             this.view = itemView;
 

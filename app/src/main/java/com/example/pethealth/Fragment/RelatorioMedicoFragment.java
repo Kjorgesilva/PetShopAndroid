@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pethealth.Activity.RelatorioMedicoActivity;
-import com.example.pethealth.Adapter.AdapterAnimal;
-import com.example.pethealth.Adapter.AdapterVacinas;
-import com.example.pethealth.Model.Animal;
+import com.example.pethealth.Adapter.AdapterRespostaRelatorio;
+import com.example.pethealth.Dao.RespostaRelatorioDAO;
+import com.example.pethealth.Model.RespostaRelatorio;
 import com.example.pethealth.R;
+import com.example.pethealth.WebService.RespostaRelatorioWs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +30,12 @@ public class RelatorioMedicoFragment extends Fragment {
 
     private Context contexto;
     private RecyclerView recyclerView;
-    private AdapterAnimal adapterAnimal;
-    private List<Animal> listateste;
-    private Animal animal;
+    private List<RespostaRelatorio> lista = new ArrayList<>();
+    private RespostaRelatorioDAO db;
 
-private Button btnRelatorioMedico;
     public RelatorioMedicoFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,40 +43,23 @@ private Button btnRelatorioMedico;
         View view;
         view = inflater.inflate(R.layout.fragment_relatorio_medico, container, false);
         contexto = getContext();
+        db = new RespostaRelatorioDAO(contexto);
 
-        listateste = new ArrayList<>();
-        animal = new Animal();
+        RespostaRelatorioWs.listarRespostaRelatorio(contexto, "respostaRelatorio/listaRespostaRelatorio");
+        lista.addAll(db.ListarBanco());
 
-        animal.setId(1);
-        animal.setNome("totó");
-
-
-
-
-        listateste.add(animal);
-
-
-
-        recyclerView = view.findViewById(R.id.recyclerViewRelatorio);
-        recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
-        recyclerView.setAdapter(new AdapterAnimal(contexto, listateste,clickListner()));
-
-
-//        btnRelatorioMedico.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), RelatorioMedicoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
+        if (lista.isEmpty()){
+            Toast.makeText(contexto,"Lista Vazia",Toast.LENGTH_LONG).show();
+        }else {
+            recyclerView = view.findViewById(R.id.recyclerViewRelatorio);
+            recyclerView.setLayoutManager(new LinearLayoutManager(contexto));
+            recyclerView.setAdapter(new AdapterRespostaRelatorio(contexto, lista,clickListner()));
+        }
         return view;
-
     }
 
-    public  AdapterAnimal.AnimalOnclickListener clickListner(){
-        return  new AdapterAnimal.AnimalOnclickListener() {
+    public AdapterRespostaRelatorio.RespostaRelatorioOnclickListener clickListner(){
+        return  new AdapterRespostaRelatorio.RespostaRelatorioOnclickListener() {
             @Override
             public void animalOnclickListener(View view, int index) {
                 Intent intent = new Intent(contexto,RelatorioMedicoActivity.class);
@@ -86,8 +67,6 @@ private Button btnRelatorioMedico;
             }
         };
     }
-
-
     public static RelatorioMedicoFragment newInstance() {
         RelatorioMedicoFragment fragment = new RelatorioMedicoFragment();
         return fragment;

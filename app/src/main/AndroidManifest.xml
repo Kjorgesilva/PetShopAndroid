@@ -18,7 +18,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Adapter.AdapterAnimal" />
+        <activity android:name=".Adapter.AdapterRespostaRelatorio" />
         <activity android:name=".Adapter.AdapterVacinas" />
         <activity android:name=".Activity.RelatorioMedicoActivity" />
         <activity android:name=".Activity.MainActivity" />

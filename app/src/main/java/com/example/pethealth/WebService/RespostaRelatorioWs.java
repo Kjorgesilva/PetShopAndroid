@@ -12,8 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pethealth.Dao.VacinasDAO;
-import com.example.pethealth.Model.Vacinas;
+import com.example.pethealth.Dao.RespostaRelatorioDAO;
+import com.example.pethealth.Model.RespostaRelatorio;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -24,29 +24,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VacinasWs {
+public class RespostaRelatorioWs {
 
 
-
-    public static void listarVacinas(final Context contexto, String path) {
+    public static void listarRespostaRelatorio(final Context contexto, String path) {
 
         RequestQueue queue = Volley.newRequestQueue(contexto);
         final JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONArray>() {
+
+
             @Override
             public void onResponse(JSONArray response) {
-                VacinasDAO db = new VacinasDAO(contexto);
-
+                RespostaRelatorioDAO db = new RespostaRelatorioDAO(contexto);
                 try {
-                    List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>() {
+                    List<RespostaRelatorio> list = new Gson().fromJson(response.toString(), new TypeToken<List<RespostaRelatorio>>() {
                     }.getType());
 
                     if (list.isEmpty()) {
-                        Toast.makeText(contexto, "Lista vazia, tomar vacina", Toast.LENGTH_LONG).show();
+                        Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
                     } else {
 
-                        if (db.findAllVacinas().size() > 0) {
+                        if (db.ListarBanco().size() > 0) {
 
-                            List<Vacinas> listDataBase = db.findAllVacinas();
+                            List<RespostaRelatorio> listDataBase = db.ListarBanco();
                             int cont = 0;
 
                             for (int i = 0; i < list.size(); i++) {
@@ -54,13 +54,11 @@ public class VacinasWs {
                                 for (int x = 0; x < listDataBase.size(); x++) {
                                     if (list.get(i).getId() != listDataBase.get(x).getId()) {
                                         cont = cont + 1;
-                                        Log.e("teste", "Id serv: " + list.get(i).getId() +
-                                                " id sqlite: " + listDataBase.get(x).getId());
+
                                     }
                                 }
                                 if (cont == listDataBase.size()) {
                                     db.inserir(list.get(i));
-                                    Log.e("teste", "entrou");
                                 }
                                 cont = 0;
                             }
@@ -70,18 +68,9 @@ public class VacinasWs {
                             }
                         }
                     }
-
-//                            Toast.makeText(contexto,"id do animal: " + list.get(i).getId() +
-//                                    "aviso " + list.get(i).getAviso() + " Data vacina: " + list.get(i).getDataVacina()+
-//                                    " Data proxima: " + list.get(i).getDataDaProxima() + " Animal: " + list.get(i).getNomeAnimal() +
-//                                    " Tipo vacina: "  + list.get(i).getNomeVacina(),Toast.LENGTH_LONG).show();
-//
-//                            Log.e("teste_list", list.get(i).getIdAnimal() + " / " +
-//                            list.get(i).getNomeAnimal());
-
-
                 } catch (IllegalStateException | JsonSyntaxException exception) {
-                    Log.e("Erro", "Erro");
+                    exception.printStackTrace();
+                    Log.e("Erro", "Erro passou aqui primeiro");
                 }
             }
         }, new Response.ErrorListener() {
@@ -104,4 +93,4 @@ public class VacinasWs {
 
     }
 
-}
+    }

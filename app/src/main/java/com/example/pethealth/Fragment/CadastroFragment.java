@@ -253,7 +253,8 @@ public class CadastroFragment extends Fragment {
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 
 
-                   cadValor(id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
+
+                    cadValor(id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
 
                     edt_nome_animal.setText("");
                     edt_nome_dono.setText("");

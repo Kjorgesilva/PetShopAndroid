@@ -46,8 +46,8 @@ public class VacinasFragment extends Fragment {
         contexto = getContext();
         db = new VacinasDAO(contexto);
 
-        listaVacina.addAll(db.findAllVacinas());
         VacinasWs.listarVacinas(contexto, "vacinacao/listavacinas");
+        listaVacina.addAll(db.findAllVacinas());
 
         if (listaVacina.isEmpty()){
             Toast.makeText(contexto,"Lista Vazia",Toast.LENGTH_LONG).show();

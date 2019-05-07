@@ -46,6 +46,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(id_endereco_agenda) REFERENCES endereco(_id_endereco)," +
                 "FOREIGN KEY(id_medico_agenda) REFERENCES medico(_id_medico))");
 
+        db.execSQL("CREATE TABLE perguntaRelatorio(_id_pergunta INTEGER PRIMARY KEY, descricao_relatorio TEXT)");
+
+
+        db.execSQL("CREATE TABLE respostaRelatorio(_id_relatorio INTEGER PRIMARY KEY, resposta_relatorio TEXT, id_pergunta_relatorio INTEGER, id_cliente_relatorio INTEGER, id_medico_relatorio INTEGER, id_animal_relatorio INTEGER)");
+
+
+
+
+
+//        db.execSQL("CREATE TABLE respostaRelatorio(_id_relatorio INTEGER PRIMARY KEY, resposta_relatorio TEXT , id_pergunta_relatorio INTEGER, id_cliente_relatorio INTEGER, id_medico_relatorio INTEGER, id_animal_relatorio INTEGER," +
+//                "FOREIGN KEY(id_pergunta_relatorio) REFERENCES perguntaRelatorio(_id_pergunta)," +
+//                "FOREIGN KEY(id_cliente_relatorio) REFERENCES cliente(_id_cliente)," +
+//                "FOREIGN KEY(id_medico_relatorio) REFERENCES medico(_id_medico)," +
+//                "FOREIGN KEY(id_animal_relatorio) REFERENCES animal(_id_animal))");
+
+
 
     }
 

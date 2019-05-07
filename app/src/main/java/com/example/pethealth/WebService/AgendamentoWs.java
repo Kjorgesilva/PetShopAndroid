@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -40,18 +41,20 @@ public class AgendamentoWs {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
+                Log.e("error_voley", error.toString());
 
-                alerta.setTitle("Aviso!!");
-                alerta.setMessage("Erro...");
-                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-
-                alerta.show();
+//                AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
+//
+//                alerta.setTitle("Aviso!!");
+//                alerta.setMessage("Erro...");
+//                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
+//
+//                alerta.show();
             }
         });
         postRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
