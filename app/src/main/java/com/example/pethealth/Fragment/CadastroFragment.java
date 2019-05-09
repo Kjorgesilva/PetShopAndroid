@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pethealth.Activity.LoginActivity;
 import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.AnimalDAO;
 import com.example.pethealth.Dao.ClienteDAO;
@@ -69,6 +70,7 @@ public class CadastroFragment extends Fragment {
     private Medico medico;
 
 
+
     //serve para fazer a ligação com a classe AgendamentoDAO e chama os metodos do Banco
     AgendamentoDAO db = new AgendamentoDAO(getContext());
     MedicoDAO dbMedico = new MedicoDAO(getContext());
@@ -89,6 +91,8 @@ public class CadastroFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
         contexto = getContext();
+
+
 
         dbAnimal = new AnimalDAO(getContext());
         listaAnimal.addAll(dbAnimal.findAllAnimal());
@@ -262,6 +266,7 @@ public class CadastroFragment extends Fragment {
                     edt_endereco.setText("");
                     edt_data.setText("");
                     tvSpinner.setText("");
+
 
                 }
             }

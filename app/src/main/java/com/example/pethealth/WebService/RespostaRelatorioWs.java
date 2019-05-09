@@ -40,10 +40,6 @@ public class RespostaRelatorioWs {
                     List<RespostaRelatorio> list = new Gson().fromJson(response.toString(), new TypeToken<List<RespostaRelatorio>>() {
                     }.getType());
 
-                    if (list.isEmpty()) {
-                        Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
-                    } else {
-
                         if (db.ListarBanco().size() > 0) {
 
                             List<RespostaRelatorio> listDataBase = db.ListarBanco();
@@ -67,7 +63,7 @@ public class RespostaRelatorioWs {
                                 db.inserir(list.get(i));
                             }
                         }
-                    }
+
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     exception.printStackTrace();
                     Log.e("Erro", "Erro passou aqui primeiro");

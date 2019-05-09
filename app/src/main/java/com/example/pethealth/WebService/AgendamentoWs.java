@@ -43,18 +43,7 @@ public class AgendamentoWs {
 
                 Log.e("error_voley", error.toString());
 
-//                AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
-//
-//                alerta.setTitle("Aviso!!");
-//                alerta.setMessage("Erro...");
-//                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//
-//                alerta.show();
+
             }
         });
         postRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

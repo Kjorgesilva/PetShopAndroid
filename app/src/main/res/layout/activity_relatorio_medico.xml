@@ -37,204 +37,59 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Paciente" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:text="Hidratação" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Espécie" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Raça" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pelagem" />
-
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sexo" />
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Macho" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Fêmea" />
-
-                </RadioGroup>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Idade" />
-
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Peso" />
-
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Queixa Principal" />
-
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-                <TextView
+                    android:id="@+id/txt_hidratação"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Hidratação" />
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Pelagem" />
 
-                <RadioGroup
+                <TextView
+                    android:id="@+id/txt_pelagem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
+                    android:text="Pelagem" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Frequencia Cardiaca" />
 
-                <RadioGroup
+                <TextView
+                    android:id="@+id/txt_frequenciaCardiaca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Frequencia Cardiaca" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sistema Respiratorio" />
 
-                <RadioGroup
+                <TextView
+                    android:id="@+id/txt_sistemaRespiratorio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Sistema Respiratorio" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cavidade Oral" />
 
-
-                <RadioGroup
+                <TextView
+                    android:id="@+id/txt_cavidadeOral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
+                    android:text="Cavidade Oral" />
 
 
                 <TextView
@@ -242,92 +97,26 @@
                     android:layout_height="wrap_content"
                     android:text="Condutores Auditivos" />
 
-                <RadioGroup
+                <TextView
+                    android:id="@+id/txt_condutorAuditivo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Condutores Auditivos" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Temperatura" />
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Normal" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alterada" />
-
-                </RadioGroup>
-
                 <TextView
+                    android:id="@+id/txt_temperatura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sistema Digestório" />
+                    android:text="Temperatura" />
 
 
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vomito" />
-
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Regurgitação" />
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Diarréia" />
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Apetite" />
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ingessão Agua" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Observações:"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>

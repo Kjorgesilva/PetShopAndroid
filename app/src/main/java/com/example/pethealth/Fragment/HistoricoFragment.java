@@ -24,7 +24,6 @@ public class HistoricoFragment extends Fragment {
     private RecyclerView recyclerView;
     private AgendamentoDAO db = new AgendamentoDAO(getContext());
     private Context context;
-    private AdapterHistorico adapterHistorico;
 
 
     public HistoricoFragment() {

@@ -26,6 +26,12 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.Hist
         this.contexto = context;
     }
 
+    public AdapterHistorico(Context context, List<Agenda> listarBanco, AdapterHistorico.HistoricoOnClickListner clickListner) {
+        this.listarBanco = listarBanco;
+        this.contexto = context;
+        this.HistoricoOnClickListner = clickListner;
+    }
+
     public AdapterHistorico.HistoricoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_historico, parent, false);
         HistoricoHolder holder = new HistoricoHolder(view);
@@ -34,7 +40,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.Hist
 
     @Override
     public void onBindViewHolder(@NonNull final HistoricoHolder holder, final int position) {
-        holder.txt_nome.setText(listarBanco.get(position).getAnimal().getNome());
+        holder.txt_nome.setText(listarBanco.get(position).getAnimal().getNome().toUpperCase());
         holder.txt_medico.setText(listarBanco.get(position).getMedico().getNome());
         holder.txt_data.setText(listarBanco.get(position).getDataInicio());
         holder.txt_data_fim.setText(listarBanco.get(position).getDataFim());

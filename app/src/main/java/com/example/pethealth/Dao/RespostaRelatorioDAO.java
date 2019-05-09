@@ -33,11 +33,12 @@ public class RespostaRelatorioDAO {
 
     public long inserir(RespostaRelatorio respostaRelatorio){
         ContentValues contentValues = new ContentValues();
+        contentValues.put("id_agenda_relatorio", respostaRelatorio.getIdAgenda());
         contentValues.put("resposta_relatorio",respostaRelatorio.getResposta());
-        contentValues.put("id_pergunta_relatorio", respostaRelatorio.getIdPergunta());
-        contentValues.put("id_cliente_relatorio",respostaRelatorio.getIdCliente());
-        contentValues.put("id_medico_relatorio",respostaRelatorio.getIdMedico());
-        contentValues.put("id_animal_relatorio",respostaRelatorio.getIdAnimal());
+        contentValues.put("id_pergunta_relatorio", respostaRelatorio.getRelatoriosPergunta());
+        contentValues.put("id_cliente_relatorio",respostaRelatorio.getRelatorioCliente());
+        contentValues.put("id_medico_relatorio",respostaRelatorio.getRelatoriosMedcio());
+        contentValues.put("id_animal_relatorio",respostaRelatorio.getRelatoriosAnimal());
 
 
         Log.e("listar", "inserio: " + contentValues.size());
@@ -100,17 +101,21 @@ public class RespostaRelatorioDAO {
 //            listaPergunta.setDescricao(cursor.getString(cursor.getColumnIndex("descricao_relatorio")));
 
 
-
+            listarCadastro.setIdAgenda(cursor.getInt(cursor.getColumnIndex("id_agenda_relatorio")));
             listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id_relatorio")));
-            listarCadastro.setIdAnimal(cursor.getString(cursor.getColumnIndex("id_animal_relatorio")));
-            listarCadastro.setIdCliente(cursor.getString(cursor.getColumnIndex("id_cliente_relatorio")));
-            listarCadastro.setIdMedico(cursor.getString(cursor.getColumnIndex("id_medico_relatorio")));
-            listarCadastro.setIdPergunta(cursor.getString(cursor.getColumnIndex("id_pergunta_relatorio")));
+            listarCadastro.setRelatoriosAnimal(cursor.getString(cursor.getColumnIndex("id_animal_relatorio")));
+            listarCadastro.setRelatorioCliente(cursor.getString(cursor.getColumnIndex("id_cliente_relatorio")));
+            listarCadastro.setRelatoriosMedcio(cursor.getString(cursor.getColumnIndex("id_medico_relatorio")));
+            listarCadastro.setRelatoriosPergunta(cursor.getString(cursor.getColumnIndex("id_pergunta_relatorio")));
             listarCadastro.setResposta((cursor.getString(cursor.getColumnIndex("resposta_relatorio"))));
 
 
             listarTodosOsElementos.add(listarCadastro);
-            Log.e("tamanhoDaListaRelatorio", "tamanho : " + listarTodosOsElementos.size());
+//            Log.e("tamanhoDaListaRelatorio", "tamanho : " + listarTodosOsElementos.size());
+
+//            for (int i = 0 ; i <listarTodosOsElementos.size();i++) {
+//                Log.e("tamanhoDaListaRelatorio", "idAgenda : " + listarTodosOsElementos.get(i).getResposta());
+//            }
         }
 
         cursor.close();

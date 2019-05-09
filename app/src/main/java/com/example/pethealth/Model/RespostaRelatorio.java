@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class RespostaRelatorio implements Serializable {
 
     private int id;
-    private Integer idResposta;
     private String resposta;
-    private String idPergunta;
-    private String idCliente;
-    private String idMedico;
-    private String idAnimal;
+    private int idAgenda;
+    private String descricaoResposta;
+    private String relatoriosPergunta;
+    private String relatorioCliente;
+    private String relatoriosMedcio;
+    private String relatoriosAnimal;
+
 
     public RespostaRelatorio() {
     }
@@ -23,14 +25,6 @@ public class RespostaRelatorio implements Serializable {
         this.id = id;
     }
 
-    public Integer getIdResposta() {
-        return idResposta;
-    }
-
-    public void setIdResposta(Integer idResposta) {
-        this.idResposta = idResposta;
-    }
-
     public String getResposta() {
         return resposta;
     }
@@ -39,35 +33,51 @@ public class RespostaRelatorio implements Serializable {
         this.resposta = resposta;
     }
 
-    public String getIdPergunta() {
-        return idPergunta;
+    public int getIdAgenda() {
+        return idAgenda;
     }
 
-    public void setIdPergunta(String idPergunta) {
-        this.idPergunta = idPergunta;
+    public void setIdAgenda(int idAgenda) {
+        this.idAgenda = idAgenda;
     }
 
-    public String getIdCliente() {
-        return idCliente;
+    public String getDescricaoResposta() {
+        return descricaoResposta;
     }
 
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+    public void setDescricaoResposta(String descricaoResposta) {
+        this.descricaoResposta = descricaoResposta;
     }
 
-    public String getIdMedico() {
-        return idMedico;
+    public String getRelatoriosPergunta() {
+        return relatoriosPergunta;
     }
 
-    public void setIdMedico(String idMedico) {
-        this.idMedico = idMedico;
+    public void setRelatoriosPergunta(String relatoriosPergunta) {
+        this.relatoriosPergunta = relatoriosPergunta;
     }
 
-    public String getIdAnimal() {
-        return idAnimal;
+    public String getRelatorioCliente() {
+        return relatorioCliente;
     }
 
-    public void setIdAnimal(String idAnimal) {
-        this.idAnimal = idAnimal;
+    public void setRelatorioCliente(String relatorioCliente) {
+        this.relatorioCliente = relatorioCliente;
+    }
+
+    public String getRelatoriosMedcio() {
+        return relatoriosMedcio;
+    }
+
+    public void setRelatoriosMedcio(String relatoriosMedcio) {
+        this.relatoriosMedcio = relatoriosMedcio;
+    }
+
+    public String getRelatoriosAnimal() {
+        return relatoriosAnimal;
+    }
+
+    public void setRelatoriosAnimal(String relatoriosAnimal) {
+        this.relatoriosAnimal = relatoriosAnimal;
     }
 }

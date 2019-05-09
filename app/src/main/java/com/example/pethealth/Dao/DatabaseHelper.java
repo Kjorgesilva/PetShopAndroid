@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE perguntaRelatorio(_id_pergunta INTEGER PRIMARY KEY, descricao_relatorio TEXT)");
 
 
-        db.execSQL("CREATE TABLE respostaRelatorio(_id_relatorio INTEGER PRIMARY KEY, resposta_relatorio TEXT, id_pergunta_relatorio INTEGER, id_cliente_relatorio INTEGER, id_medico_relatorio INTEGER, id_animal_relatorio INTEGER)");
+        db.execSQL("CREATE TABLE respostaRelatorio(_id_relatorio INTEGER PRIMARY KEY, id_agenda_relatorio INTEGER, resposta_relatorio TEXT, id_pergunta_relatorio INTEGER, id_cliente_relatorio INTEGER, id_medico_relatorio INTEGER, id_animal_relatorio INTEGER)");
 
 
 

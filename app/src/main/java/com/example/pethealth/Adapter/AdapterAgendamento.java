@@ -29,6 +29,11 @@ public class AdapterAgendamento extends RecyclerView.Adapter<AdapterAgendamento.
 
     }
 
+    public AdapterAgendamento(Context contexto, List<Agenda> listarBanco) {
+        this.contexto = contexto;
+        this.list = listarBanco;
+    }
+
 
     public AdapterAgendamento.AgendamentoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_agendamento, parent, false);
