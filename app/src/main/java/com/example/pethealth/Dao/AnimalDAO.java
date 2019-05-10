@@ -64,4 +64,11 @@ public class AnimalDAO {
         return listarTodosAnimal;
     }
 
+    public void deleTudo() {
+        SQLiteDatabase db = getDabase();
+        db.execSQL(String.format("DELETE FROM %s", "animal"));
+        db.execSQL("VACUUM");
+    }
+
+
 }

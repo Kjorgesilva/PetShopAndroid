@@ -10,6 +10,8 @@ public class Usuario implements Serializable {
  private String nome;
  private String email;
  private int idPerfil;
+ private int idCliente;
+
 
     public Usuario() {
     }
@@ -60,5 +62,13 @@ public class Usuario implements Serializable {
 
     public void setIdPerfil(int idPerfil) {
         this.idPerfil = idPerfil;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 }

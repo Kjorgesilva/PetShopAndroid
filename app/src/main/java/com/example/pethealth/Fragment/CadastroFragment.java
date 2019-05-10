@@ -25,6 +25,7 @@ import com.example.pethealth.Dao.AnimalDAO;
 import com.example.pethealth.Dao.ClienteDAO;
 import com.example.pethealth.Dao.EnderecoDAO;
 import com.example.pethealth.Dao.MedicoDAO;
+import com.example.pethealth.Dao.UsuarioDAO;
 import com.example.pethealth.InterfaceHelp.Mask;
 import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.Model.Animal;
@@ -49,7 +50,7 @@ import java.util.Map;
 public class CadastroFragment extends Fragment {
     private EditText edt_data, edt_data_fim;
     private TextView edt_nome_dono, edt_nome_animal, edt_endereco;
-    private ImageButton imgSpinner,imgEdt_nome_animal,imgEdt_nome, imgedt_endereco;
+    private ImageButton imgSpinner, imgEdt_nome_animal, imgEdt_nome, imgedt_endereco;
     private TextView tvSpinner;
     private Button btn_cadastrar;
     private Context contexto;
@@ -63,12 +64,11 @@ public class CadastroFragment extends Fragment {
     private List<Endereco> listaEndereco = new ArrayList<>();
 
 
-    private int id_animal,id_cliente,id_endereco,id_medico;
+    private int id_animal, id_cliente, id_endereco, id_medico;
     private Animal animal;
     private Cliente cliente;
     private Endereco endereco;
     private Medico medico;
-
 
 
     //serve para fazer a ligação com a classe AgendamentoDAO e chama os metodos do Banco
@@ -77,6 +77,7 @@ public class CadastroFragment extends Fragment {
     AnimalDAO dbAnimal = new AnimalDAO(getContext());
     ClienteDAO dbCliente = new ClienteDAO(getContext());
     EnderecoDAO dbEndereco = new EnderecoDAO(getContext());
+    UsuarioDAO dbUsuario = new UsuarioDAO(getContext());
 
 
     public CadastroFragment() {
@@ -92,25 +93,25 @@ public class CadastroFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
         contexto = getContext();
 
-
+        dbUsuario = new UsuarioDAO(getContext());
 
         dbAnimal = new AnimalDAO(getContext());
         listaAnimal.addAll(dbAnimal.findAllAnimal());
-        AnimalWs.listarAnimal(contexto, "animal/listaAnimal");
+        AnimalWs.listarAnimal(contexto, "animal/" + String.valueOf(dbUsuario.findAllUsuario().getIdCliente()) + "/listaAnimal");
 
         dbMedico = new MedicoDAO(getContext());
         listaMedico.addAll(dbMedico.findAllMedico());
         MedicoWS.listarMedico(contexto, "medico/listaMedico");
 
 
-        dbCliente = new ClienteDAO(getContext());
-        listaCliente.addAll(dbCliente.findAllCliente());
-        ClienteWs.listarCliente(contexto,"cliente/listaCliente");
+        // dbCliente = new ClienteDAO(getContext());
+        //listaCliente.addAll(dbCliente.findAllCliente());
+        //  ClienteWs.listarCliente(contexto,"cliente/listaCliente");
 
 
         dbEndereco = new EnderecoDAO(getContext());
         listaEndereco.addAll(dbEndereco.findAllEndereco());
-        EnderecoWs.listarEndereco(contexto,"endereco/listaEndereco");
+        EnderecoWs.listarEndereco(contexto, "endereco/listaEndereco");
 
         edt_nome_animal = view.findViewById(R.id.edt_nome_animal);
         edt_nome_dono = view.findViewById(R.id.edt_nome_dono);
@@ -173,24 +174,27 @@ public class CadastroFragment extends Fragment {
             }
         });
 
-        imgEdt_nome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogCliente();
-            }
-        });
+//        imgEdt_nome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showDialogCliente();
+//            }
+//        });
+//
+//        edt_nome_dono.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showDialogCliente();
+//            }
+//        });
 
-        edt_nome_dono.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogCliente();
-            }
-        });
+        edt_nome_dono.setText(dbUsuario.findAllUsuario().getNome());
+
 
         imgSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               showDialogMedico();
+                showDialogMedico();
 
             }
         });
@@ -226,7 +230,7 @@ public class CadastroFragment extends Fragment {
 
             }
         });
-
+        Log.e("teste", " id: " + dbUsuario.findAllUsuario().getIdCliente());
 
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,14 +252,13 @@ public class CadastroFragment extends Fragment {
                     String data = (edt_data.getText().toString() + " " + horario);
                     String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
 
-                    db.inserir(new Agenda(animal,cliente, endereco, data, medico, dataFim));
+                    db.inserir(new Agenda(animal, cliente, endereco, data, medico, dataFim));
 
 //                   List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
 //                   int id = agenda.get(agenda.size() - 1).getId();
 
 
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
-
 
 
                     cadValor(id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
@@ -278,7 +281,6 @@ public class CadastroFragment extends Fragment {
 
     private void cadValor(int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim) {
         Map<String, String> map = new HashMap<>();
-
 
         map.put("id_animal", String.valueOf(id_animal));
         map.put("id_cliente", String.valueOf(id_cliente));
@@ -309,6 +311,7 @@ public class CadastroFragment extends Fragment {
         });
         alert.show();
     }
+
     public void showDialogEndereco() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Endereço:");
@@ -328,23 +331,24 @@ public class CadastroFragment extends Fragment {
 
         alert.show();
     }
-    public void showDialogCliente() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-        alert.setTitle("Selecione Cliente:");
-        String[] itens = new String[listaCliente.size()];
-        for (int l = 0; l < listaCliente.size(); l++) {
-            itens[l] = listaCliente.get(l).getNome();
-        }
-        alert.setItems(itens, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                edt_nome_dono.setText(listaCliente.get(i).getNome().toUpperCase());
-                id_cliente = listaCliente.get(i).getId();
-                cliente =listaCliente.get(i);
-            }
-        });
-        alert.show();
-    }
+
+    //    public void showDialogCliente() {
+//        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+//        alert.setTitle("Selecione Cliente:");
+//        String[] itens = new String[listaCliente.size()];
+//        for (int l = 0; l < listaCliente.size(); l++) {
+//            itens[l] = listaCliente.get(l).getNome();
+//        }
+//        alert.setItems(itens, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                edt_nome_dono.setText(listaCliente.get(i).getNome().toUpperCase());
+//                id_cliente = listaCliente.get(i).getId();
+//                cliente =listaCliente.get(i);
+//            }
+//        });
+//        alert.show();
+//    }
     public void showDialogAnimal() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Animal:");
@@ -364,8 +368,7 @@ public class CadastroFragment extends Fragment {
     }
 
 
-
-      public static CadastroFragment newInstance() {
+    public static CadastroFragment newInstance() {
         CadastroFragment fragment = new CadastroFragment();
         return fragment;
     }

@@ -15,22 +15,39 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pethealth.Activity.MainActivity;
+import com.example.pethealth.Dao.UsuarioDAO;
+import com.example.pethealth.Model.Usuario;
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.util.Map;
 
 public class UsuarioWs {
 
-    public static void logar(final Context contexto,String url, final Map<String, String> params) {
+    public static void logar(final Context contexto, String url, final Map<String, String> params) {
         RequestQueue queue = Volley.newRequestQueue(contexto);
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, Connection.getUrl() + url ,
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, Connection.getUrl() + url,
                 new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
+                UsuarioDAO db = new UsuarioDAO(contexto);
+                Usuario usuario = new Gson().fromJson(response.toString(), Usuario.class);
+
+                if (usuario != null) {
+                    db.deleTudo();
+                    db.inserir(usuario);
+                    Toast.makeText(contexto,"Cliente lista: "+ db.findAllUsuario().getNome(),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(contexto,"erro",Toast.LENGTH_LONG).show();
+                }
+
+
                 try {
                     Intent intent = new Intent(contexto, MainActivity.class);
                     contexto.startActivity(intent);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

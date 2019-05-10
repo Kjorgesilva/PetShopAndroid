@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE cliente(_id_cliente INTEGER PRIMARY KEY, nome_cliente TEXT, rg_cliente TEXT,endereco_cliente TEXT, telefone_cliente TEXT, email_cliente TEXT, idUsuario_cliente INTEGER)");
         db.execSQL("CREATE TABLE endereco(_id_endereco INTEGER PRIMARY KEY, rua_endereco TEXT, cidade_endereco TEXT,bairro_endereco TEXT, estado_endereco TEXT)");
+        db.execSQL("CREATE TABLE usuario(_id_usuario INTEGER PRIMARY KEY, login_usuario TEXT, senha_usuario TEXT,nome_usuario TEXT, email_usuario TEXT,idPerfil_usuario INTEGER,idCliente_usuario INTEGER)");
 
 
 

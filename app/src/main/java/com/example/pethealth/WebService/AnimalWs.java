@@ -44,31 +44,38 @@ public class AnimalWs {
                         Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
                     } else {
 
-                        if (db.findAllAnimal().size() > 0) {
-
-                            List<Animal> listDataBase = db.findAllAnimal();
-                            int cont = 0;
-
-                            for (int i = 0; i < list.size(); i++) {
-
-                                for (int x = 0; x < listDataBase.size(); x++) {
-                                    if (list.get(i).getId() != listDataBase.get(x).getId()) {
-                                        cont = cont + 1;
-                                        Log.e("teste", "Id serv: " + list.get(i).getId() +
-                                                " id sqlite: " + listDataBase.get(x).getId());
-                                    }
-                                }
-                                if (cont == listDataBase.size()) {
-                                    db.inserir(list.get(i));
+                        db.deleTudo();
+                        for(int x = 0; x < list.size(); x++){
+                            db.inserir(list.get(x));
                                     Log.e("teste", "entrou");
-                                }
-                                cont = 0;
-                            }
-                        } else {
-                            for (int i = 0; i < list.size(); i++) {
-                                db.inserir(list.get(i));
-                            }
                         }
+
+//                        if (db.findAllAnimal().size() > 0) {
+//
+//                            List<Animal> listDataBase = db.findAllAnimal();
+//                            int cont = 0;
+//
+//                            for (int i = 0; i < list.size(); i++) {
+//
+//                                for (int x = 0; x < listDataBase.size(); x++) {
+//                                    if (list.get(i).getId() != listDataBase.get(x).getId()) {
+//                                        cont = cont + 1;
+//                                        Log.e("teste", "Id serv: " + list.get(i).getId() +
+//                                                " id sqlite: " + listDataBase.get(x).getId());
+//                                    }
+//                                }
+//                                if (cont == listDataBase.size()) {
+//                                   db.deleTudo();
+//                                    db.inserir(list.get(i));
+//                                    Log.e("teste", "entrou");
+//                                }
+//                                cont = 0;
+//                            }
+//                        } else {
+//                            for (int i = 0; i < list.size(); i++) {
+//                                db.inserir(list.get(i));
+//                            }
+//                        }
                     }
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     Log.e("Erro", "Erro");
