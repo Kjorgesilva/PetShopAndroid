@@ -30,6 +30,8 @@ public class EnderecoDAO {
 
     public long inserir(Endereco cadastro) {
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("_id_endereco", cadastro.getId());
         contentValues.put("rua_endereco", cadastro.getRua());
         contentValues.put("cidade_endereco", cadastro.getCidade());
         contentValues.put("bairro_endereco", cadastro.getBairro());
@@ -69,5 +71,10 @@ public class EnderecoDAO {
         return listarTodosEndereco;
     }
 
+    public void deleTudo() {
+        SQLiteDatabase db = getDabase();
+        db.execSQL(String.format("DELETE FROM %s", "endereco"));
+        db.execSQL("VACUUM");
+    }
 
 }

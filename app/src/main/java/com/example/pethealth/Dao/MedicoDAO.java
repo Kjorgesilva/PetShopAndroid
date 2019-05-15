@@ -25,6 +25,8 @@ public class MedicoDAO {
     }
     public long inserir(Medico cadastro) {
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("_id_medico", cadastro.getId());
         contentValues.put("nome_medico", cadastro.getNome());
         contentValues.put("telefone_medico", cadastro.getTelefone());
         contentValues.put("email_medico", cadastro.getEmail());
@@ -45,6 +47,11 @@ public class MedicoDAO {
         }
         cursor.close();
         return listarTodosMedicos;
+    }
+    public void deleTudo() {
+        SQLiteDatabase db = getDabase();
+        db.execSQL(String.format("DELETE FROM %s", "medico"));
+        db.execSQL("VACUUM");
     }
 
 

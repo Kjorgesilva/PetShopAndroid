@@ -5,20 +5,19 @@ import java.io.Serializable;
 public class Agenda implements Serializable {
     private int id;
     private Animal animal;
-    private Cliente cliente;
     private String dataInicio;
     private Endereco endereco;
     private String dataFim;
     private Medico medico;
+    private int idCliente;
 
 
     public Agenda() {
 
     }
 
-    public Agenda(Animal id_animal, Cliente id_cliente, Endereco id_endereco, String data, Medico id_medico, String dataFim) {
+    public Agenda(Animal id_animal, Endereco id_endereco, String data, Medico id_medico, String dataFim) {
         this.animal=id_animal;
-        this.cliente = id_cliente;
         this.dataInicio = data;
         this.dataFim = dataFim;
         this.endereco = id_endereco;
@@ -26,6 +25,14 @@ public class Agenda implements Serializable {
 
     }
 
+    public Agenda(Animal animal, int idCliente, Endereco endereco, String data, Medico medico, String dataFim) {
+        this.animal=animal;
+        this.idCliente = idCliente;
+        this.dataInicio = data;
+        this.dataFim = dataFim;
+        this.endereco = endereco;
+        this.medico = medico;
+    }
 
 
     public int getId() {
@@ -42,14 +49,6 @@ public class Agenda implements Serializable {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     public String getDataInicio() {
@@ -78,6 +77,14 @@ public class Agenda implements Serializable {
 
     public Medico getMedico() {
         return medico;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public void setMedico(Medico medico) {

@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.Model.Animal;
-import com.example.pethealth.Model.Cliente;
 import com.example.pethealth.Model.Endereco;
 import com.example.pethealth.Model.Medico;
 
@@ -36,7 +35,7 @@ public class AgendamentoDAO {
     public long inserir(Agenda cadastro) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id_animal_agenda", cadastro.getAnimal().getId());
-        contentValues.put("id_cliente_agenda", cadastro.getCliente().getId());
+        contentValues.put("id_cliente_agenda", cadastro.getIdCliente());
         contentValues.put("dataInicio_agenda", cadastro.getDataInicio());
         contentValues.put("id_endereco_agenda", cadastro.getEndereco().getId());
         contentValues.put("dataFim_agenda", cadastro.getDataFim());
@@ -48,22 +47,21 @@ public class AgendamentoDAO {
     }
 
 
-    public List<Agenda> ListarBanco() {
+    public List<Agenda> ListarBanco(int idCliente) {
         List<Agenda> listarTodosOsElementos = new ArrayList<Agenda>();
         // fazer um inner join
+        String[] args = {String.valueOf(idCliente)};
         Cursor cursor = getDabase().rawQuery("SELECT con._id_agenda, con.id_animal_agenda, con.id_cliente_agenda, con.dataInicio_agenda,con.id_endereco_agenda , con.dataFim_agenda, con.id_medico_agenda ," +
-                "ani.nome_animal, ani.raca_animal, ani.cor_animal, ani.dataNascimento_animal, ani.sexo_animal, ani.paisOrigem_animal, ani.observacoes_animal,cli.nome_cliente, cli.rg_cliente, cli.endereco_cliente, cli.telefone_cliente, cli.email_cliente ," +
+                "ani.nome_animal, ani.raca_animal, ani.cor_animal, ani.dataNascimento_animal, ani.sexo_animal, ani.paisOrigem_animal, ani.observacoes_animal," +
                 "ende.rua_endereco, ende.cidade_endereco, ende.bairro_endereco, ende.estado_endereco, med.nome_medico, med.telefone_medico, med.email_medico" +
                 " FROM agenda con" +
                 " INNER JOIN animal ani ON con.id_animal_agenda = ani._id_animal " +
-                " INNER JOIN cliente cli ON con.id_cliente_agenda = cli._id_cliente " +
                 " INNER JOIN endereco ende ON con.id_endereco_agenda = ende._id_endereco " +
-                " INNER JOIN medico med ON con.id_medico_agenda = med._id_medico " +
-                " ORDER BY con._id_agenda", null);
+                " INNER JOIN medico med ON con.id_medico_agenda = med._id_medico  WHERE id_cliente_agenda = ?" +
+                " ORDER BY con._id_agenda", args);
         while (cursor.moveToNext()) {
             Agenda listarCadastro = new Agenda();
             Animal listAnimal = new Animal();
-            Cliente listCliente = new Cliente();
             Endereco listEndereco = new Endereco();
             Medico listMedico = new Medico();
 
@@ -79,17 +77,6 @@ public class AgendamentoDAO {
 
             Log.e("nome", "passou : " + listAnimal.getNome());
             Log.e("nome", "passou : " + listAnimal.getId());
-
-
-
-            //Cliente
-            listCliente.setId(cursor.getInt(cursor.getColumnIndex("id_cliente_agenda")));
-            listCliente.setNome(cursor.getString(cursor.getColumnIndex("nome_cliente")));
-            listCliente.setEmail(cursor.getString(cursor.getColumnIndex("email_cliente")));
-            listCliente.setEndereco(cursor.getString(cursor.getColumnIndex("endereco_cliente")));
-            listCliente.setRg(cursor.getString(cursor.getColumnIndex("rg_cliente")));
-            listCliente.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_cliente")));
-
 
             //Endereco
             listEndereco.setId(cursor.getInt(cursor.getColumnIndex("id_endereco_agenda")));
@@ -109,7 +96,6 @@ public class AgendamentoDAO {
 
             listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id_agenda")));
             listarCadastro.setAnimal(listAnimal);
-            listarCadastro.setCliente(listCliente);
             listarCadastro.setEndereco(listEndereco);
             listarCadastro.setMedico(listMedico);
             listarCadastro.setDataInicio(cursor.getString(cursor.getColumnIndex("dataInicio_agenda")));
@@ -147,7 +133,7 @@ public class AgendamentoDAO {
     public void delete(Integer id) {
         getDabase().delete("agenda", "_id = ?", new String[]{String.valueOf(id)});
 
-        Log.e("passouAqui", "Delete" + ListarBanco().size());
+       // Log.e("passouAqui", "Delete" + ListarBanco().size());
     }
 
 

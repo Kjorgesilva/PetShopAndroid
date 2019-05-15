@@ -10,6 +10,7 @@ public class RespostaRelatorio implements Serializable {
     private String descricaoResposta;
     private String relatoriosPergunta;
     private String relatorioCliente;
+    private int idCliente;
     private String relatoriosMedcio;
     private String relatoriosAnimal;
 
@@ -79,5 +80,13 @@ public class RespostaRelatorio implements Serializable {
 
     public void setRelatoriosAnimal(String relatoriosAnimal) {
         this.relatoriosAnimal = relatoriosAnimal;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 }
