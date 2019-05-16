@@ -368,18 +368,15 @@ public class CadastroFragment extends Fragment {
                             for (int x = 0; x < cadastroGeral.getListaAnimal().size(); x++) {
 
                                 for (Animal animal : dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente())) {
-                                    if (cadastroGeral.getListaAnimal().get(x).getId() != animal.getId()
-                                            && !cadastroGeral.getListaAnimal().get(x).getNome().equals(animal.getNome())) {
-
+                                    if (cadastroGeral.getListaAnimal().get(x).getId() != animal.getId()) {
                                         contAnimal = contAnimal + 1;
-
                                     }
                                 }
 
-                                if(contAnimal == dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()).size() ){
+                                if (contAnimal == dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()).size()) {
                                     dbAnimal.inserir(cadastroGeral.getListaAnimal().get(x));
-                                    contAnimal = 0;
                                 }
+                                contAnimal = 0;
 
                             }
 
@@ -401,17 +398,17 @@ public class CadastroFragment extends Fragment {
 
                                 for (Medico medico : dbMedico.findAllMedico()) {
 
-                                    if (medico.getId() != cadastroGeral.getListaMedico().get(h).getId()
-                                            && !medico.getNome().equals(cadastroGeral.getListaMedico().get(h).getNome())) {
+                                    if (medico.getId() != cadastroGeral.getListaMedico().get(h).getId()) {
 
                                         contMedico = contMedico + 1;
                                     }
                                 }
 
-                                if(contMedico == dbMedico.findAllMedico().size()){
+                                if (contMedico == dbMedico.findAllMedico().size()) {
                                     dbMedico.inserir(cadastroGeral.getListaMedico().get(h));
-                                    contMedico = 0;
                                 }
+
+                                contMedico = 0;
 
                             }
 
@@ -431,17 +428,16 @@ public class CadastroFragment extends Fragment {
 
                                 for (Endereco endereco : dbEndereco.findAllEndereco()) {
 
-                                    if (endereco.getId() != cadastroGeral.getListaEndereco().get(h).getId()
-                                            && !endereco.getRua().equals(cadastroGeral.getListaEndereco().get(h).getRua())) {
+                                    if (endereco.getId() != cadastroGeral.getListaEndereco().get(h).getId()) {
 
                                         contEndereco = contEndereco + 1;
                                     }
                                 }
 
-                                if(contEndereco == dbEndereco.findAllEndereco().size() ){
+                                if (contEndereco == dbEndereco.findAllEndereco().size()) {
                                     dbEndereco.inserir(cadastroGeral.getListaEndereco().get(h));
-                                    contEndereco = 0;
                                 }
+                                contEndereco = 0;
 
                             }
 

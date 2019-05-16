@@ -200,6 +200,7 @@ public class RelatorioMedicoFragment extends Fragment {
                             }
 
                         }
+
                     } else {
 
                         for (int i = 0; i < list.size(); i++) {
