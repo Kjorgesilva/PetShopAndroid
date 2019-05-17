@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceHelp {
         Map<String, String> map = new HashMap<>();
         map.put("login", login);
         map.put("senha", senha);
-        UsuarioWs.logar(contexto,"usuario", map);
+        UsuarioWs.logar(contexto,"usuario/login", map);
         Log.e("chamou", "chamou o metodo" + "map" + map);
     }
 

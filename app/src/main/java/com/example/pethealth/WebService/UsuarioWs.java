@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -53,6 +54,7 @@ public class UsuarioWs {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("erro_login", error.getMessage());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
                 alerta.setTitle("Aviso!!");
                 alerta.setMessage("Login ou Senha inválidos...");
