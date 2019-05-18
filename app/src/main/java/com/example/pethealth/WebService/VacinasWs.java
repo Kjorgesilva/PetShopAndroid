@@ -35,50 +35,20 @@ public class VacinasWs {
             @Override
             public void onResponse(JSONArray response) {
                 VacinasDAO db = new VacinasDAO(contexto);
+                List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>() {}.getType());
+
+
 
                 try {
-                    List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>() {
-                    }.getType());
-
                     if (list.isEmpty()) {
-                        Toast.makeText(contexto, "Lista vazia, tomar vacina", Toast.LENGTH_LONG).show();
+                        Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
                     } else {
-
-                        if (db.findAllVacinas().size() > 0) {
-
-                            List<Vacinas> listDataBase = db.findAllVacinas();
-                            int cont = 0;
-
-                            for (int i = 0; i < list.size(); i++) {
-
-                                for (int x = 0; x < listDataBase.size(); x++) {
-                                    if (list.get(i).getId() != listDataBase.get(x).getId()) {
-                                        cont = cont + 1;
-                                        Log.e("teste", "Id serv: " + list.get(i).getId() +
-                                                " id sqlite: " + listDataBase.get(x).getId());
-                                    }
-                                }
-                                if (cont == listDataBase.size()) {
-                                    db.inserir(list.get(i));
-                                    Log.e("teste", "entrou");
-                                }
-                                cont = 0;
-                            }
-                        } else {
-                            for (int i = 0; i < list.size(); i++) {
-                                db.inserir(list.get(i));
-                            }
+                        db.deleTudo();
+                        for(int x = 0; x < list.size(); x++){
+                            db.inserir(list.get(x));
+                            Log.e("teste", "entrou");
                         }
                     }
-
-//                            Toast.makeText(contexto,"id do animal: " + list.get(i).getId() +
-//                                    "aviso " + list.get(i).getAviso() + " Data vacina: " + list.get(i).getDataVacina()+
-//                                    " Data proxima: " + list.get(i).getDataDaProxima() + " Animal: " + list.get(i).getNomeAnimal() +
-//                                    " Tipo vacina: "  + list.get(i).getNomeVacina(),Toast.LENGTH_LONG).show();
-//
-//                            Log.e("teste_list", list.get(i).getIdAnimal() + " / " +
-//                            list.get(i).getNomeAnimal());
-
 
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     Log.e("Erro", "Erro");

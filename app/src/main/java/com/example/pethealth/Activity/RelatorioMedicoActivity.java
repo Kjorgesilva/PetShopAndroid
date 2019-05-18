@@ -1,22 +1,14 @@
 package com.example.pethealth.Activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.RespostaRelatorioDAO;
-import com.example.pethealth.InterfaceHelp.InterfaceHelp;
 import com.example.pethealth.Model.RespostaRelatorio;
 import com.example.pethealth.R;
-import com.example.pethealth.WebService.RespostaRelatorioWs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +27,9 @@ public class RelatorioMedicoActivity extends AppCompatActivity {
 
         dao = new RespostaRelatorioDAO(context);
 
-        listaResposta.addAll(dao.ListarBanco());
-        RespostaRelatorioWs.listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
+        int idRelatorio = (int) getIntent().getSerializableExtra("id_relatorio");
+        listaResposta.addAll(dao.findByIdAgenga(idRelatorio));
+        //RespostaRelatorioWs.listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
 
 
 

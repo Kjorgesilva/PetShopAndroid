@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.pethealth.Adapter.AdapterAgendamento;
 import com.example.pethealth.Adapter.AdapterHistorico;
 import com.example.pethealth.Dao.AgendamentoDAO;
+import com.example.pethealth.Dao.UsuarioDAO;
 import com.example.pethealth.R;
 
 /**
@@ -41,8 +42,9 @@ public class HistoricoFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         context = this.getContext();
         db = new AgendamentoDAO(getContext());
+        UsuarioDAO usuarioDAO = new UsuarioDAO(context);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterHistorico(getContext(), db.ListarBanco()));
+        recyclerView.setAdapter(new AdapterHistorico(getContext(), db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente())));
 
         return view;
 

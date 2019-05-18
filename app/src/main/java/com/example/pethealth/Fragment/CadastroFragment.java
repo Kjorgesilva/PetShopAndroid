@@ -19,25 +19,32 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pethealth.Activity.LoginActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.AnimalDAO;
-import com.example.pethealth.Dao.ClienteDAO;
 import com.example.pethealth.Dao.EnderecoDAO;
 import com.example.pethealth.Dao.MedicoDAO;
 import com.example.pethealth.Dao.UsuarioDAO;
 import com.example.pethealth.InterfaceHelp.Mask;
 import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.Model.Animal;
-import com.example.pethealth.Model.Cliente;
+import com.example.pethealth.Model.CadastroGeral;
 import com.example.pethealth.Model.Endereco;
 import com.example.pethealth.Model.Medico;
 import com.example.pethealth.R;
 import com.example.pethealth.WebService.AgendamentoWs;
-import com.example.pethealth.WebService.AnimalWs;
-import com.example.pethealth.WebService.ClienteWs;
-import com.example.pethealth.WebService.EnderecoWs;
-import com.example.pethealth.WebService.MedicoWS;
+import com.example.pethealth.WebService.Connection;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,22 +67,20 @@ public class CadastroFragment extends Fragment {
     private String horario2;
     private List<Medico> listaMedico = new ArrayList<>();
     private List<Animal> listaAnimal = new ArrayList<>();
-    private List<Cliente> listaCliente = new ArrayList<>();
     private List<Endereco> listaEndereco = new ArrayList<>();
 
 
     private int id_animal, id_cliente, id_endereco, id_medico;
     private Animal animal;
-    private Cliente cliente;
     private Endereco endereco;
     private Medico medico;
+    private UsuarioDAO dao;
 
 
     //serve para fazer a ligação com a classe AgendamentoDAO e chama os metodos do Banco
     AgendamentoDAO db = new AgendamentoDAO(getContext());
     MedicoDAO dbMedico = new MedicoDAO(getContext());
     AnimalDAO dbAnimal = new AnimalDAO(getContext());
-    ClienteDAO dbCliente = new ClienteDAO(getContext());
     EnderecoDAO dbEndereco = new EnderecoDAO(getContext());
     UsuarioDAO dbUsuario = new UsuarioDAO(getContext());
 
@@ -92,26 +97,15 @@ public class CadastroFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
         contexto = getContext();
-
+        dbMedico = new MedicoDAO(getContext());
+        dbAnimal = new AnimalDAO(getContext());
+        dbEndereco = new EnderecoDAO(getContext());
         dbUsuario = new UsuarioDAO(getContext());
 
-        dbAnimal = new AnimalDAO(getContext());
-        listaAnimal.addAll(dbAnimal.findAllAnimal());
-        AnimalWs.listarAnimal(contexto, "animal/" + String.valueOf(dbUsuario.findAllUsuario().getIdCliente()) + "/listaAnimal");
+        dao = new UsuarioDAO(contexto);
 
-        dbMedico = new MedicoDAO(getContext());
-        listaMedico.addAll(dbMedico.findAllMedico());
-        MedicoWS.listarMedico(contexto, "medico/listaMedico");
+        listarGeral(contexto, "cadastro/" + String.valueOf(dbUsuario.findAllUsuario().getIdCliente()) + "/listaCadastroGeral");
 
-
-        // dbCliente = new ClienteDAO(getContext());
-        //listaCliente.addAll(dbCliente.findAllCliente());
-        //  ClienteWs.listarCliente(contexto,"cliente/listaCliente");
-
-
-        dbEndereco = new EnderecoDAO(getContext());
-        listaEndereco.addAll(dbEndereco.findAllEndereco());
-        EnderecoWs.listarEndereco(contexto, "endereco/listaEndereco");
 
         edt_nome_animal = view.findViewById(R.id.edt_nome_animal);
         edt_nome_dono = view.findViewById(R.id.edt_nome_dono);
@@ -174,21 +168,8 @@ public class CadastroFragment extends Fragment {
             }
         });
 
-//        imgEdt_nome.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showDialogCliente();
-//            }
-//        });
-//
-//        edt_nome_dono.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showDialogCliente();
-//            }
-//        });
 
-        edt_nome_dono.setText(dbUsuario.findAllUsuario().getNome());
+        edt_nome_dono.setText(dbUsuario.findAllUsuario().getNome().toUpperCase());
 
 
         imgSpinner.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +211,6 @@ public class CadastroFragment extends Fragment {
 
             }
         });
-        Log.e("teste", " id: " + dbUsuario.findAllUsuario().getIdCliente());
 
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,7 +232,8 @@ public class CadastroFragment extends Fragment {
                     String data = (edt_data.getText().toString() + " " + horario);
                     String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
 
-                    db.inserir(new Agenda(animal, cliente, endereco, data, medico, dataFim));
+
+                    db.inserir(new Agenda(animal, dao.findAllUsuario().getIdCliente(), endereco, data, medico, dataFim));
 
 //                   List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
 //                   int id = agenda.get(agenda.size() - 1).getId();
@@ -261,8 +242,9 @@ public class CadastroFragment extends Fragment {
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 
 
-                    cadValor(id_animal, id_cliente, id_endereco, data, id_medico, dataFim);
+                    cadValor(id_animal, dao.findAllUsuario().getIdCliente(), id_endereco, data, id_medico, dataFim);
 
+                    Log.e("idClienteService", "passou: " + dao.findAllUsuario().getIdCliente());
                     edt_nome_animal.setText("");
                     edt_nome_dono.setText("");
                     edt_data_fim.setText("");
@@ -332,23 +314,6 @@ public class CadastroFragment extends Fragment {
         alert.show();
     }
 
-    //    public void showDialogCliente() {
-//        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-//        alert.setTitle("Selecione Cliente:");
-//        String[] itens = new String[listaCliente.size()];
-//        for (int l = 0; l < listaCliente.size(); l++) {
-//            itens[l] = listaCliente.get(l).getNome();
-//        }
-//        alert.setItems(itens, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                edt_nome_dono.setText(listaCliente.get(i).getNome().toUpperCase());
-//                id_cliente = listaCliente.get(i).getId();
-//                cliente =listaCliente.get(i);
-//            }
-//        });
-//        alert.show();
-//    }
     public void showDialogAnimal() {
         AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
         alert.setTitle("Selecione Animal:");
@@ -367,10 +332,151 @@ public class CadastroFragment extends Fragment {
         alert.show();
     }
 
-
     public static CadastroFragment newInstance() {
         CadastroFragment fragment = new CadastroFragment();
         return fragment;
+    }
+
+    public void listarGeral(final Context contexto, String path) {
+        RequestQueue queue = Volley.newRequestQueue(contexto);
+        final JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                AnimalDAO dbAnimal = new AnimalDAO(contexto);
+                EnderecoDAO dbEndereco = new EnderecoDAO(contexto);
+                MedicoDAO dbMedico = new MedicoDAO(contexto);
+
+                try {
+                    CadastroGeral cadastroGeral = new Gson().fromJson(response.toString(), CadastroGeral.class);
+                    if (cadastroGeral == null) {
+                        Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();
+                    } else {
+
+
+                        //animal -------------------------------------------------------------------
+                        int contAnimal = 0;
+                        if (dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()).size() == 0) {
+                            for (Animal animal : cadastroGeral.getListaAnimal()) {
+
+                                dbAnimal.inserir(animal);
+                            }
+
+                        } else {
+
+                            for (int x = 0; x < cadastroGeral.getListaAnimal().size(); x++) {
+
+                                for (Animal animal : dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente())) {
+                                    if (cadastroGeral.getListaAnimal().get(x).getId() != animal.getId()) {
+                                        contAnimal = contAnimal + 1;
+                                    }
+                                }
+
+                                if (contAnimal == dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()).size()) {
+                                    dbAnimal.inserir(cadastroGeral.getListaAnimal().get(x));
+                                }
+                                contAnimal = 0;
+
+                            }
+
+
+                        }
+
+
+                        //medico -------------------------------------------------------------------
+                        int contMedico = 0;
+                        if (dbMedico.findAllMedico().size() == 0) {
+
+                            for (int h = 0; h < cadastroGeral.getListaMedico().size(); h++) {
+                                dbMedico.inserir(cadastroGeral.getListaMedico().get(h));
+                            }
+
+                        } else {
+
+                            for (int h = 0; h < cadastroGeral.getListaMedico().size(); h++) {
+
+                                for (Medico medico : dbMedico.findAllMedico()) {
+
+                                    if (medico.getId() != cadastroGeral.getListaMedico().get(h).getId()) {
+
+                                        contMedico = contMedico + 1;
+                                    }
+                                }
+
+                                if (contMedico == dbMedico.findAllMedico().size()) {
+                                    dbMedico.inserir(cadastroGeral.getListaMedico().get(h));
+                                }
+
+                                contMedico = 0;
+
+                            }
+
+                        }
+
+                        //endereco -----------------------------------------------------------------
+                        int contEndereco = 0;
+                        if (dbEndereco.findAllEndereco().size() == 0) {
+
+                            for (int h = 0; h < cadastroGeral.getListaEndereco().size(); h++) {
+                                dbEndereco.inserir(cadastroGeral.getListaEndereco().get(h));
+                            }
+
+                        } else {
+
+                            for (int h = 0; h < cadastroGeral.getListaEndereco().size(); h++) {
+
+                                for (Endereco endereco : dbEndereco.findAllEndereco()) {
+
+                                    if (endereco.getId() != cadastroGeral.getListaEndereco().get(h).getId()) {
+
+                                        contEndereco = contEndereco + 1;
+                                    }
+                                }
+
+                                if (contEndereco == dbEndereco.findAllEndereco().size()) {
+                                    dbEndereco.inserir(cadastroGeral.getListaEndereco().get(h));
+                                }
+                                contEndereco = 0;
+
+                            }
+
+                        }
+                        //popula lista dos spinners
+                        listaAnimal.clear();
+                        listaAnimal.addAll(dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()));
+                        listaMedico.clear();
+                        listaMedico.addAll(dbMedico.findAllMedico());
+                        listaEndereco.clear();
+                        listaEndereco.addAll(dbEndereco.findAllEndereco());
+
+//                        Toast.makeText(contexto, "tamanho Animal: "+ String.valueOf(listaAnimal.size()),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(contexto, "tamanho Medico: "+ String.valueOf(listaMedico.size()),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(contexto, "tamanho Endereco: "+ String.valueOf(listaEndereco.size()),Toast.LENGTH_LONG).show();
+
+
+                    }
+                } catch (IllegalStateException | JsonSyntaxException exception) {
+                    Log.e("Erro", "Erro" + exception.getMessage());
+                    exception.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Erro", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("Content-Type", "application/json; charset=UTF-8");
+                return header;
+            }
+        };
+        getRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(getRequest);
+
     }
 
 }

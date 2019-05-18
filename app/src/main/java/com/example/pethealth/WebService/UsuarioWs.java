@@ -32,18 +32,18 @@ public class UsuarioWs {
             @Override
             public void onResponse(JSONObject response) {
 
-                UsuarioDAO db = new UsuarioDAO(contexto);
+
+                UsuarioDAO dbUsuario = new UsuarioDAO(contexto);
+
                 Usuario usuario = new Gson().fromJson(response.toString(), Usuario.class);
 
                 if (usuario != null) {
-                    db.deleTudo();
-                    db.inserir(usuario);
-                    Toast.makeText(contexto,"Cliente lista: "+ db.findAllUsuario().getNome(),Toast.LENGTH_LONG).show();
+                    dbUsuario.deleTudo();
+                    dbUsuario.inserir(usuario);
+
                 } else {
-                    Toast.makeText(contexto,"erro",Toast.LENGTH_LONG).show();
+                    Toast.makeText(contexto, "erro", Toast.LENGTH_LONG).show();
                 }
-
-
                 try {
                     Intent intent = new Intent(contexto, MainActivity.class);
                     contexto.startActivity(intent);
@@ -54,9 +54,8 @@ public class UsuarioWs {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("erro_login", error.getMessage());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
-
                 alerta.setTitle("Aviso!!");
                 alerta.setMessage("Login ou Senha inválidos...");
                 alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.pethealth.Adapter.AdapterAgendamento;
 import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.AnimalDAO;
+import com.example.pethealth.Dao.UsuarioDAO;
 import com.example.pethealth.Model.Animal;
 import com.example.pethealth.R;
 
@@ -42,7 +43,8 @@ public class HomeFragment extends Fragment {
         context = this.getContext();
         db = new AgendamentoDAO(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterAgendamento(context, db.ListarBanco(), clickListner()));
+        UsuarioDAO usuarioDAO = new UsuarioDAO(context);
+        recyclerView.setAdapter(new AdapterAgendamento(context, db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()), clickListner()));
 
 
 

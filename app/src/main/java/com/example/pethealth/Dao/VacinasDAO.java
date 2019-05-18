@@ -76,5 +76,11 @@ public class VacinasDAO {
         return listatodasVacinas;
     }
 
+    public void deleTudo() {
+        SQLiteDatabase db = getDabase();
+        db.execSQL(String.format("DELETE FROM %s", "vacinas"));
+        db.execSQL("VACUUM");
+    }
+
 
 }

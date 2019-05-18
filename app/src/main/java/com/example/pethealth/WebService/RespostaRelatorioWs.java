@@ -40,9 +40,9 @@ public class RespostaRelatorioWs {
                     List<RespostaRelatorio> list = new Gson().fromJson(response.toString(), new TypeToken<List<RespostaRelatorio>>() {
                     }.getType());
 
-                        if (db.ListarBanco().size() > 0) {
+                        if (db.ListarBanco(0).size() > 0) {
 
-                            List<RespostaRelatorio> listDataBase = db.ListarBanco();
+                            List<RespostaRelatorio> listDataBase = db.ListarBanco(0);
                             int cont = 0;
 
                             for (int i = 0; i < list.size(); i++) {
