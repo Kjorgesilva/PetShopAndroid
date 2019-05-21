@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
     private void cancelarConsulta(String id) {
         Map<String, String> map = new HashMap<>();
         map.put("login", id);
-        //arrumar metodo 
+        //arrumar metodo
         cancelar(context,"consulta/" + 1 + "/atualizaAgenda" ,map);
         Log.e("chamou", "chamou o metodo" + "map" + map);
     }
