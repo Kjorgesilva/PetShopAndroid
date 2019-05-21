@@ -103,8 +103,6 @@ public class VacinasFragment extends Fragment {
                 VacinasDAO db = new VacinasDAO(contexto);
                 List<Vacinas> list = new Gson().fromJson(response.toString(), new TypeToken<List<Vacinas>>() {}.getType());
 
-
-
                 try {
                     if (list.isEmpty()) {
                         Toast.makeText(contexto, "Lista vazia", Toast.LENGTH_LONG).show();

@@ -57,6 +57,8 @@ public class RespostaRelatorioWs {
                                     db.inserir(list.get(i));
                                 }
                                 cont = 0;
+
+
                             }
                         } else {
                             for (int i = 0; i < list.size(); i++) {

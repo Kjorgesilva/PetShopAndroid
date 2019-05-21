@@ -32,7 +32,6 @@ public class RelatorioMedicoActivity extends AppCompatActivity {
         //RespostaRelatorioWs.listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
 
 
-
         txt_hidratação = findViewById(R.id.txt_hidratação);
         txt_pelagem = findViewById(R.id.txt_pelagem);
         txt_frequenciaCardiaca = findViewById(R.id.txt_frequenciaCardiaca);
@@ -41,17 +40,61 @@ public class RelatorioMedicoActivity extends AppCompatActivity {
         txt_temperatura = findViewById(R.id.txt_temperatura);
         txt_condutorAuditivo = findViewById(R.id.txt_condutorAuditivo);
 
-        if (listaResposta.isEmpty()){
-         Toast.makeText(context,"Lista vazia",Toast.LENGTH_LONG).show();
-        }else {
+        if (listaResposta.isEmpty()) {
+            Toast.makeText(context, "Lista vazia", Toast.LENGTH_LONG).show();
+        } else {
 
-            txt_hidratação.setText(listaResposta.get(0).getResposta());
-            txt_pelagem.setText(listaResposta.get(1).getResposta());
-            txt_frequenciaCardiaca.setText(listaResposta.get(2).getResposta());
-            txt_sistemaRespiratorio.setText(listaResposta.get(3).getResposta());
-            txt_cavidadeOral.setText(listaResposta.get(4).getResposta());
-            txt_temperatura.setText(listaResposta.get(5).getResposta());
-            txt_condutorAuditivo.setText(listaResposta.get(6).getResposta());
+            if (listaResposta.get(0).getResposta().equals("0")) {
+                txt_hidratação.setText("Normal");
+            }else {
+                txt_hidratação.setText("Alterado");
+            }
+
+            if (listaResposta.get(1).getResposta().equals("0")) {
+                txt_pelagem.setText("Normal");
+            }else {
+                txt_pelagem.setText("Alterado");
+            }
+
+            if (listaResposta.get(2).getResposta().equals("0")) {
+                txt_frequenciaCardiaca.setText("Normal");
+
+            } else {
+                txt_frequenciaCardiaca.setText("Alterado");
+            }
+
+
+            if (listaResposta.get(3).getResposta().equals("0")) {
+                txt_sistemaRespiratorio.setText("Normal");
+
+            } else {
+                txt_sistemaRespiratorio.setText("Alterado");
+            }
+
+            if (listaResposta.get(4).getResposta().equals("0")) {
+                txt_cavidadeOral.setText("Normal");
+
+            } else {
+                txt_cavidadeOral.setText("Alterado");
+
+            }
+
+
+            if (listaResposta.get(5).getResposta().equals("0")) {
+                txt_condutorAuditivo.setText("Normal");
+            } else {
+                txt_condutorAuditivo.setText("Alterado");
+            }
+
+            if (listaResposta.get(6).getResposta().equals("0")) {
+                txt_temperatura.setText("Normal");
+            } else {
+                txt_temperatura.setText("Alterado");
+
+            }
+
+
+
         }
     }
 

@@ -93,14 +93,12 @@ public class AgendamentoDAO {
             listMedico.setTelefone(cursor.getString(cursor.getColumnIndex("telefone_medico")));
 
 
-
             listarCadastro.setId(cursor.getInt(cursor.getColumnIndex("_id_agenda")));
             listarCadastro.setAnimal(listAnimal);
             listarCadastro.setEndereco(listEndereco);
             listarCadastro.setMedico(listMedico);
             listarCadastro.setDataInicio(cursor.getString(cursor.getColumnIndex("dataInicio_agenda")));
             listarCadastro.setDataFim((cursor.getString(cursor.getColumnIndex("dataFim_agenda"))));
-
 
 
             Log.e("nome", "passou : " + listarCadastro.getAnimal() + String.valueOf(listarCadastro.getId()));
@@ -133,7 +131,7 @@ public class AgendamentoDAO {
     public void delete(Integer id) {
         getDabase().delete("agenda", "_id = ?", new String[]{String.valueOf(id)});
 
-       // Log.e("passouAqui", "Delete" + ListarBanco().size());
+        // Log.e("passouAqui", "Delete" + ListarBanco().size());
     }
 
 
@@ -142,6 +140,20 @@ public class AgendamentoDAO {
         Log.e("teste", "passou aqui");
         db.execSQL(String.format("DELETE FROM %s", "agenda"));
         db.execSQL("VACUUM");
+    }
+
+    public Agenda findAll( int idAgendamento) {
+        Agenda agenda = null;
+        String[] args = {String.valueOf(idAgendamento)};
+        Cursor cursor = getDabase().rawQuery("SELECT * FROM agenda WHERE  _id_agenda = ? ", args);
+        while (cursor.moveToNext()) {
+            agenda = new Agenda();
+            agenda.setId(cursor.getInt(cursor.getColumnIndex("_id_agenda")));
+        }
+
+        cursor.close();
+
+        return agenda;
     }
 
 

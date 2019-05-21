@@ -52,10 +52,10 @@ public class RelatorioMedicoFragment extends Fragment {
     private RecyclerView recyclerView;
     private AgendamentoDAO db = new AgendamentoDAO(getContext());
     private Context context;
-    private List<RespostaRelatorio> listaResposta = new ArrayList<>();
     private RespostaRelatorioDAO dao;
     private UsuarioDAO usuarioDAO;
     private List<RespostaRelatorio> respostaRelatorioList = new ArrayList<>();
+    private List<RespostaRelatorio> listaAux = new ArrayList<>();
 
 
     public RelatorioMedicoFragment() {
@@ -80,46 +80,6 @@ public class RelatorioMedicoFragment extends Fragment {
 
         listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
 
-        if(dao.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()).size() > 0){
-
-            int idAgenda;
-            int cont = 0;
-
-            //lista todos pelo id do cliente
-            for(RespostaRelatorio respostaRelatorio : dao.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente())){
-
-                idAgenda = respostaRelatorio.getIdAgenda();
-
-                for(RespostaRelatorio respostaRelatorio1 : dao.findByIdAgenga(idAgenda)){
-
-                    if(respostaRelatorioList.size() == 0){
-                        respostaRelatorioList.add(respostaRelatorio1);
-                    } else {
-
-                        for(RespostaRelatorio respostaRelatorio2 : respostaRelatorioList){
-
-                            if(respostaRelatorio1.getIdAgenda() != respostaRelatorio2.getIdAgenda()){
-                                respostaRelatorioList.add(respostaRelatorio1);
-                            }
-
-                        }
-
-                        cont = cont + 1;
-                    }
-
-
-
-                }
-
-                cont = 0;
-            }
-
-
-            recyclerView.setAdapter(new AdapterRelatorioMedico(getContext(), respostaRelatorioList,
-                    clickListner()));
-        }
-
-
 
         return view;
     }
@@ -132,24 +92,15 @@ public class RelatorioMedicoFragment extends Fragment {
             @Override
             public void clickListenerView(View view, int index) {
 
-                if (dao.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()).size() > 0) {
+
 
                     Intent intent = new Intent(context, RelatorioMedicoActivity.class);
-                    intent.putExtra("id_relatorio", respostaRelatorioList.get(index).getIdAgenda());
+                    intent.putExtra("id_relatorio", listaAux.get(index).getIdAgenda());
                     startActivity(intent);
 
-                } else {
-
-                    Toast.makeText(context, "Ainda não há relatória para essa consulta.", Toast.LENGTH_LONG).show();
-
-                }
-
-
             }
-
             @Override
             public void onLongClick(View view, int i) {
-
             }
 
 
@@ -207,6 +158,29 @@ public class RelatorioMedicoFragment extends Fragment {
                             db.inserir(list.get(i));
                         }
                     }
+                    List<Integer> lista = new ArrayList<>();
+                    List<RespostaRelatorio> listaBanco = new ArrayList<>();
+
+
+                    listaBanco.addAll(dao.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()));
+
+                    if (listaBanco.size() == 0){
+                        Toast.makeText(context, "Carregando relatória... Tente novamente.", Toast.LENGTH_LONG).show();
+                    }else{
+
+                        for (int y=0; y<listaBanco.size();y++){
+                            Integer idAgenda = listaBanco.get(y).getIdAgenda();
+                            if (!lista.contains(idAgenda)){
+                                lista.add(idAgenda);
+                                listaAux.add(listaBanco.get(y));
+
+                            }
+                        }
+
+                        recyclerView.setAdapter(new AdapterRelatorioMedico(context,listaAux,clickListner()));
+                    }
+
+
 
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     exception.printStackTrace();
@@ -232,5 +206,6 @@ public class RelatorioMedicoFragment extends Fragment {
         queue.add(getRequest);
 
     }
+
 
 }

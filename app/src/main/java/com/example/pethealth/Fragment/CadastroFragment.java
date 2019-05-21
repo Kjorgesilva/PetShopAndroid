@@ -246,7 +246,6 @@ public class CadastroFragment extends Fragment {
 
                     Log.e("idClienteService", "passou: " + dao.findAllUsuario().getIdCliente());
                     edt_nome_animal.setText("");
-                    edt_nome_dono.setText("");
                     edt_data_fim.setText("");
                     edt_endereco.setText("");
                     edt_data.setText("");
@@ -359,7 +358,6 @@ public class CadastroFragment extends Fragment {
                         int contAnimal = 0;
                         if (dbAnimal.findAllAnimal(dao.findAllUsuario().getIdCliente()).size() == 0) {
                             for (Animal animal : cadastroGeral.getListaAnimal()) {
-
                                 dbAnimal.inserir(animal);
                             }
 

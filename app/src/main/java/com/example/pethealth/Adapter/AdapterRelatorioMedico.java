@@ -33,6 +33,8 @@ public class AdapterRelatorioMedico extends RecyclerView.Adapter<AdapterRelatori
         this.RelatorioOnClick = clickListner;
     }
 
+
+
     public AdapterRelatorioMedico.HistoricoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(contexto).inflate(R.layout.adapter_relatorio_medico, parent, false);
         HistoricoHolder holder = new HistoricoHolder(view);

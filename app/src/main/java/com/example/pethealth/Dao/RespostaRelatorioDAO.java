@@ -202,4 +202,11 @@ public class RespostaRelatorioDAO {
         return listarTodosOsElementos;
     }
 
+
+    public void deleTudo() {
+        SQLiteDatabase db = getDabase();
+        db.execSQL(String.format("DELETE FROM %s", "respostaRelatorio"));
+        db.execSQL("VACUUM");
+    }
+
 }
