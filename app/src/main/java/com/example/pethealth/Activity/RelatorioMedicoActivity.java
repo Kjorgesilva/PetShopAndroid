@@ -3,6 +3,7 @@ package com.example.pethealth.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class RelatorioMedicoActivity extends AppCompatActivity {
     private Context context = this;
+    private Toolbar toolbar;
     private List<RespostaRelatorio> listaResposta = new ArrayList<>();
     private RespostaRelatorioDAO dao = new RespostaRelatorioDAO(context);
     private TextView txt_hidratação, txt_pelagem, txt_frequenciaCardiaca, txt_sistemaRespiratorio, txt_cavidadeOral, txt_temperatura, txt_condutorAuditivo;
@@ -30,6 +32,10 @@ public class RelatorioMedicoActivity extends AppCompatActivity {
         int idRelatorio = (int) getIntent().getSerializableExtra("id_relatorio");
         listaResposta.addAll(dao.findByIdAgenga(idRelatorio));
         //RespostaRelatorioWs.listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("PetHealth");
 
 
         txt_hidratação = findViewById(R.id.txt_hidratação);

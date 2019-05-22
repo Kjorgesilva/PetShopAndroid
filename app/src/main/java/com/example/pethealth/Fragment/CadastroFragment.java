@@ -2,9 +2,11 @@ package com.example.pethealth.Fragment;
 
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.animation.ImageMatrixProperty;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +51,7 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +60,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class CadastroFragment extends Fragment {
-    private EditText edt_data, edt_data_fim;
+    private TextView txt_data_inicio, txt_data_fim;
     private TextView edt_nome_dono, edt_nome_animal, edt_endereco;
     private ImageButton imgSpinner, imgEdt_nome_animal, imgEdt_nome, imgedt_endereco;
     private TextView tvSpinner;
@@ -75,6 +80,13 @@ public class CadastroFragment extends Fragment {
     private Endereco endereco;
     private Medico medico;
     private UsuarioDAO dao;
+
+    private ImageView imgViewDataInicio,imgViewDataFim;
+
+
+
+
+    private DatePickerDialog datePickerDialog;
 
 
     //serve para fazer a ligação com a classe AgendamentoDAO e chama os metodos do Banco
@@ -109,9 +121,9 @@ public class CadastroFragment extends Fragment {
 
         edt_nome_animal = view.findViewById(R.id.edt_nome_animal);
         edt_nome_dono = view.findViewById(R.id.edt_nome_dono);
-        edt_data_fim = view.findViewById(R.id.edt_data_fim);
+        txt_data_fim = view.findViewById(R.id.edt_data_fim);
         edt_endereco = view.findViewById(R.id.edt_endereco);
-        edt_data = view.findViewById(R.id.edt_data);
+        txt_data_inicio = view.findViewById(R.id.edt_data);
         btn_cadastrar = view.findViewById(R.id.btn_cadastrar);
         imgSpinner = view.findViewById(R.id.imgSpinner);
         imgEdt_nome_animal = view.findViewById(R.id.imgEdt_nome_animal);
@@ -120,6 +132,10 @@ public class CadastroFragment extends Fragment {
         tvSpinner = view.findViewById(R.id.tvSpinner);
         spinner = view.findViewById(R.id.spinnerHoras);
         spinner2 = view.findViewById(R.id.spinnerHorasFim);
+
+        imgViewDataInicio = view.findViewById(R.id.imgViewDataInicio);
+        imgViewDataFim = view.findViewById(R.id.imgViewDataFim);
+
 
 
         ArrayAdapter adaptador = ArrayAdapter.createFromResource
@@ -136,8 +152,83 @@ public class CadastroFragment extends Fragment {
 
         db = new AgendamentoDAO(getContext());
 
-        edt_data.addTextChangedListener(Mask.insert("##/##/####", edt_data));
-        edt_data_fim.addTextChangedListener(Mask.insert("##/##/####", edt_data_fim));
+        //edt_data.addTextChangedListener(Mask.insert("##/##/####", edt_data));
+
+        imgViewDataInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int day, month, year;
+                Calendar c = Calendar.getInstance();
+                day = c.get(Calendar.DAY_OF_MONTH);
+                month = c.get(Calendar.MONTH);
+                year = c.get(Calendar.YEAR);
+
+
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker,  int year, int month, int day) {
+
+                        String dia = String.valueOf(day);
+                        month = month + 1;
+                        String mes = String.valueOf(month);
+                        if (dia.length() == 1) {
+                            dia = "0" + dia;
+                        }
+                        if (mes.length() == 1) {
+                            mes = "0" + mes;
+                        }
+
+                        String dataSelecionada = dia + "/" + mes + "/" + String.valueOf(year);
+                        txt_data_inicio.setText(dataSelecionada);
+
+
+                    }
+                };
+                datePickerDialog = new DatePickerDialog(contexto, listener, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        imgViewDataFim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int day, month, year;
+                Calendar c = Calendar.getInstance();
+                day = c.get(Calendar.DAY_OF_MONTH);
+                month = c.get(Calendar.MONTH);
+                year = c.get(Calendar.YEAR);
+
+
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker,  int year, int month, int day) {
+
+                        String dia = String.valueOf(day);
+                        month = month + 1;
+                        String mes = String.valueOf(month);
+                        if (dia.length() == 1) {
+                            dia = "0" + dia;
+                        }
+                        if (mes.length() == 1) {
+                            mes = "0" + mes;
+                        }
+
+                        String dataSelecionada = dia + "/" + mes + "/" + String.valueOf(year);
+                        txt_data_fim.setText(dataSelecionada);
+
+
+                    }
+                };
+                datePickerDialog = new DatePickerDialog(contexto, listener, year, month, day);
+                datePickerDialog.show();
+
+            }
+        });
+
+
+
+
+        //edt_data_fim.addTextChangedListener(Mask.insert("##/##/####", edt_data_fim));
 
 
         edt_endereco.setOnClickListener(new View.OnClickListener() {
@@ -213,29 +304,32 @@ public class CadastroFragment extends Fragment {
         });
 
 
-
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (edt_nome_animal.getText().toString().isEmpty()) {
                     edt_nome_animal.setError("Preencha o campo");
-                } else if (edt_data_fim.getText().toString().isEmpty()) {
-                    edt_data_fim.setError("Preencha o campo");
+                } else if (txt_data_fim.getText().toString().isEmpty()) {
+                    txt_data_fim.setError("Preencha o campo");
                 } else if (edt_nome_dono.getText().toString().isEmpty()) {
                     edt_nome_dono.setError("Preencha o campo");
                 } else if (edt_endereco.getText().toString().isEmpty()) {
                     edt_endereco.setError("Preencha o campo");
-                } else if (edt_data.getText().toString().isEmpty()) {
-                    edt_data.setError("Preencha o campo");
+                } else if (txt_data_inicio.getText().toString().isEmpty()) {
+                    txt_data_inicio.setError("Preencha o campo");
                 } else if (tvSpinner.getText().toString().isEmpty()) {
                     tvSpinner.setError("Preencha o campo");
                 } else {
 
-                    String data = (edt_data.getText().toString() + " " + horario);
-                    String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
+                    String data = (txt_data_inicio.getText().toString() + " " + horario);
+                    String dataFim = (txt_data_fim.getText().toString() + " " + horario2);
+
+
+
+
+
+
                     String status_agendamento = "P";
-
-
                     db.inserir(new Agenda(animal, dao.findAllUsuario().getIdCliente(), endereco, data, medico, dataFim,status_agendamento));
 
 //                   List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
@@ -249,9 +343,9 @@ public class CadastroFragment extends Fragment {
 
                     Log.e("idClienteService", "passou: " + dao.findAllUsuario().getIdCliente());
                     edt_nome_animal.setText("");
-                    edt_data_fim.setText("");
+                    txt_data_fim.setText("");
                     edt_endereco.setText("");
-                    edt_data.setText("");
+                    txt_data_inicio.setText("");
                     tvSpinner.setText("");
 
 

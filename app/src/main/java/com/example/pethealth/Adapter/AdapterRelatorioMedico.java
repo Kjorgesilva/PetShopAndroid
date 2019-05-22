@@ -46,7 +46,7 @@ public class AdapterRelatorioMedico extends RecyclerView.Adapter<AdapterRelatori
         holder.tvConsulta.setText(String.valueOf(respostaRelatorio.get(position).getIdAgenda()));
         holder.tvAnimal.setText(respostaRelatorio.get(position).getRelatoriosAnimal());
         holder.tvMedico.setText(respostaRelatorio.get(position).getRelatoriosMedcio());
-        holder.tvDataConsulta.setText("15/05/2019");
+
 
         if (RelatorioOnClick != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

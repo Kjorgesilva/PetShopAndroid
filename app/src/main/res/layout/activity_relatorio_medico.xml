@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.RelatorioMedicoActivity">
+    <include layout="@layout/include_toolbar"></include>
 
 
     <ScrollView
@@ -37,82 +38,110 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hidratação" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:text="Hidratação Do Pet" />
 
                 <TextView
                     android:id="@+id/txt_hidratação"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Hidratação" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Pelagem" />
 
                 <TextView
                     android:id="@+id/txt_pelagem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Pelagem" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Frequencia Cardiaca" />
 
                 <TextView
                     android:id="@+id/txt_frequenciaCardiaca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Frequencia Cardiaca" />
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Sistema Respiratorio" />
 
                 <TextView
                     android:id="@+id/txt_sistemaRespiratorio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Sistema Respiratorio" />
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Cavidade Oral" />
 
                 <TextView
                     android:id="@+id/txt_cavidadeOral"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Cavidade Oral" />
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Condutores Auditivos" />
 
                 <TextView
                     android:id="@+id/txt_condutorAuditivo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Condutores Auditivos" />
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
                     android:text="Temperatura" />
 
                 <TextView
                     android:id="@+id/txt_temperatura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16dp"
                     android:text="Temperatura" />
 
 
