@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE tipoVacina(_id_tipoVacina INTEGER PRIMARY KEY, descricao_tipoVacina TEXT )");
         db.execSQL("CREATE TABLE medico(_id_medico INTEGER PRIMARY KEY, nome_medico TEXT, telefone_medico TEXT, email_medico TEXT, idUsuario_medico INTEGER )");
 
-        db.execSQL("CREATE TABLE agenda(_id_agenda INTEGER PRIMARY KEY, id_animal_agenda INTEGER , id_cliente_agenda INTEGER, dataInicio_agenda TEXT, id_endereco_agenda INTEGER, dataFim_agenda TEXT , id_medico_agenda INTEGER," +
+        db.execSQL("CREATE TABLE agenda(_id_agenda INTEGER PRIMARY KEY, id_animal_agenda INTEGER , id_cliente_agenda INTEGER, dataInicio_agenda TEXT, id_endereco_agenda INTEGER, dataFim_agenda TEXT , id_medico_agenda INTEGER, status_agendamento TEXT," +
                 "FOREIGN KEY(id_animal_agenda) REFERENCES animal(_id_animal)," +
                 "FOREIGN KEY(id_endereco_agenda) REFERENCES endereco(_id_endereco)," +
                 "FOREIGN KEY(id_medico_agenda) REFERENCES medico(_id_medico))");

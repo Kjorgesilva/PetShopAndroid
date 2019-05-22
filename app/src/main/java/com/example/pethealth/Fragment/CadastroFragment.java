@@ -212,6 +212,8 @@ public class CadastroFragment extends Fragment {
             }
         });
 
+
+
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,9 +233,10 @@ public class CadastroFragment extends Fragment {
 
                     String data = (edt_data.getText().toString() + " " + horario);
                     String dataFim = (edt_data_fim.getText().toString() + " " + horario2);
+                    String status_agendamento = "P";
 
 
-                    db.inserir(new Agenda(animal, dao.findAllUsuario().getIdCliente(), endereco, data, medico, dataFim));
+                    db.inserir(new Agenda(animal, dao.findAllUsuario().getIdCliente(), endereco, data, medico, dataFim,status_agendamento));
 
 //                   List<Agenda> agenda = new ArrayList<>(db.ListarBanco());
 //                   int id = agenda.get(agenda.size() - 1).getId();
@@ -242,7 +245,7 @@ public class CadastroFragment extends Fragment {
                     Toast.makeText(getContext(), "Consulta Agendada", Toast.LENGTH_LONG).show();
 
 
-                    cadValor(id_animal, dao.findAllUsuario().getIdCliente(), id_endereco, data, id_medico, dataFim);
+                    cadValor(id_animal, dao.findAllUsuario().getIdCliente(), id_endereco, data, id_medico, dataFim,status_agendamento);
 
                     Log.e("idClienteService", "passou: " + dao.findAllUsuario().getIdCliente());
                     edt_nome_animal.setText("");
@@ -260,7 +263,7 @@ public class CadastroFragment extends Fragment {
         return view;
     }
 
-    private void cadValor(int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim) {
+    private void cadValor(int id_animal, int id_cliente, int id_endereco, String data, int id_medico, String dataFim, String status_agendamento) {
         Map<String, String> map = new HashMap<>();
 
         map.put("id_animal", String.valueOf(id_animal));
@@ -269,6 +272,7 @@ public class CadastroFragment extends Fragment {
         map.put("data", data);
         map.put("id_medico", String.valueOf(id_medico));
         map.put("dataFim", dataFim);
+        map.put("status_agendamento", status_agendamento);
 
         AgendamentoWs.agendamentoMedico(contexto, "consulta", map);
 

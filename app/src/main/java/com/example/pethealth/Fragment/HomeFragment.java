@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pethealth.Adapter.AdapterAgendamento;
+import com.example.pethealth.Adapter.AdapterRelatorioMedico;
 import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.AnimalDAO;
 import com.example.pethealth.Dao.UsuarioDAO;
@@ -30,7 +31,9 @@ import com.example.pethealth.Model.Agenda;
 import com.example.pethealth.Model.Animal;
 import com.example.pethealth.R;
 import com.example.pethealth.WebService.Connection;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -83,11 +86,12 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AgendamentoDAO dbAgenda = new AgendamentoDAO(context);
-                        Agenda agendaAux = dbAgenda.findAll(listaAgenda.get(i).getId());
+                        Agenda agendaAux = dbAgenda.findAll(listaAgenda.get(position).getId());
 
                         if (agendaAux != null){
-                              cancelarConsulta(String.valueOf(agendaAux));
+                              cancelarConsulta(String.valueOf(agendaAux.getId()));
                         }
+
 
 
 
@@ -118,36 +122,57 @@ public class HomeFragment extends Fragment {
 
     private void cancelarConsulta(String id) {
         Map<String, String> map = new HashMap<>();
-        map.put("login", id);
-        //arrumar metodo
-        cancelar(context,"consulta/" + 1 + "/atualizaAgenda" ,map);
-        Log.e("chamou", "chamou o metodo" + "map" + map);
+        map.put("id", id);
+        cancelar(context,"consulta/atualizaAgenda" ,map);
+        Log.e("chamouAgenda", "chamou o metodo" + "map" + map);
     }
 
 
-    public static void cancelar(Context contexto, String url, final Map<String, String> params) {
-        RequestQueue queue = Volley.newRequestQueue(contexto);
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, Connection.getUrl() + url,
+    public  void cancelar(final Context contexto, String url, final Map<String, String> params) {
+        final RequestQueue queue = Volley.newRequestQueue(contexto);
+        final JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, Connection.getUrl() + url,
                 new JSONObject(params), new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
+                try {
 
+                    int idAgenda =  Integer.parseInt(response.getString("id"));
+                    Agenda ag = db.findAll(idAgenda);
+                    ag.setStatus_agendamento("C");
+                    db.update(ag);
+
+                    recyclerView.setAdapter(new AdapterAgendamento(context, db.ListarBanco(ag.getIdCliente()),
+                            clickListner()));
+
+                    Toast.makeText(context,"retorno: " + ag.getStatus_agendamento(),Toast.LENGTH_LONG).show();
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Erro", error.toString());
+
+            Toast.makeText(context,"Operação não realizada, tente mais tarde.",Toast.LENGTH_LONG).show();
+
             }
         }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> header = new HashMap<String, String>();
-                header.put("Content-Type", "application/json; charset=UTF-8");
-                return header;
-            }
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> header = new HashMap<String, String>();
+//                header.put("Content-Type", "application/json; charset=UTF-8");
+//                return header;
+//            }
+//        };
         };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(postRequest);
 
     }
 }

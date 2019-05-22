@@ -44,7 +44,7 @@ public class HistoricoFragment extends Fragment {
         db = new AgendamentoDAO(getContext());
         UsuarioDAO usuarioDAO = new UsuarioDAO(context);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new AdapterHistorico(getContext(), db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente())));
+        recyclerView.setAdapter(new AdapterHistorico(getContext(), db.ListarBancoHistorico(usuarioDAO.findAllUsuario().getIdCliente())));
 
         return view;
 

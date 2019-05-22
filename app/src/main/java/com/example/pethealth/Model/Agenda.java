@@ -10,6 +10,7 @@ public class Agenda implements Serializable {
     private String dataFim;
     private Medico medico;
     private int idCliente;
+    private String status_agendamento;
 
 
     public Agenda() {
@@ -32,6 +33,16 @@ public class Agenda implements Serializable {
         this.dataFim = dataFim;
         this.endereco = endereco;
         this.medico = medico;
+    }
+
+    public Agenda(Animal animal, int idCliente, Endereco endereco, String data, Medico medico, String dataFim, String status_agendamento) {
+        this.animal=animal;
+        this.idCliente = idCliente;
+        this.dataInicio = data;
+        this.dataFim = dataFim;
+        this.endereco = endereco;
+        this.medico = medico;
+        this.status_agendamento = status_agendamento;
     }
 
 
@@ -89,5 +100,13 @@ public class Agenda implements Serializable {
 
     public void setMedico(Medico medico) {
         this.medico = medico;
+    }
+
+    public String getStatus_agendamento() {
+        return status_agendamento;
+    }
+
+    public void setStatus_agendamento(String status_agendamento) {
+        this.status_agendamento = status_agendamento;
     }
 }
