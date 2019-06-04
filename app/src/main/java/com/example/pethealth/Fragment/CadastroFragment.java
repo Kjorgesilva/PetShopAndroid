@@ -180,40 +180,6 @@ public class CadastroFragment extends Fragment {
 
                         String dataSelecionada = dia + "/" + mes + "/" + String.valueOf(year);
                         txt_data_inicio.setText(dataSelecionada);
-
-
-                    }
-                };
-                datePickerDialog = new DatePickerDialog(contexto, listener, year, month, day);
-                datePickerDialog.show();
-            }
-        });
-
-        imgViewDataFim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int day, month, year;
-                Calendar c = Calendar.getInstance();
-                day = c.get(Calendar.DAY_OF_MONTH);
-                month = c.get(Calendar.MONTH);
-                year = c.get(Calendar.YEAR);
-
-
-                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker,  int year, int month, int day) {
-
-                        String dia = String.valueOf(day);
-                        month = month + 1;
-                        String mes = String.valueOf(month);
-                        if (dia.length() == 1) {
-                            dia = "0" + dia;
-                        }
-                        if (mes.length() == 1) {
-                            mes = "0" + mes;
-                        }
-
-                        String dataSelecionada = dia + "/" + mes + "/" + String.valueOf(year);
                         txt_data_fim.setText(dataSelecionada);
 
 
@@ -221,9 +187,44 @@ public class CadastroFragment extends Fragment {
                 };
                 datePickerDialog = new DatePickerDialog(contexto, listener, year, month, day);
                 datePickerDialog.show();
-
             }
         });
+
+//        imgViewDataFim.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int day, month, year;
+//                Calendar c = Calendar.getInstance();
+//                day = c.get(Calendar.DAY_OF_MONTH);
+//                month = c.get(Calendar.MONTH);
+//                year = c.get(Calendar.YEAR);
+//
+//
+//                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker datePicker,  int year, int month, int day) {
+//
+//                        String dia = String.valueOf(day);
+//                        month = month + 1;
+//                        String mes = String.valueOf(month);
+//                        if (dia.length() == 1) {
+//                            dia = "0" + dia;
+//                        }
+//                        if (mes.length() == 1) {
+//                            mes = "0" + mes;
+//                        }
+//
+//                        String dataSelecionada = dia + "/" + mes + "/" + String.valueOf(year);
+//                        txt_data_fim.setText(dataSelecionada);
+//
+//
+//                    }
+//                };
+//                datePickerDialog = new DatePickerDialog(contexto, listener, year, month, day);
+//                datePickerDialog.show();
+//
+//            }
+//        });
 
 
 

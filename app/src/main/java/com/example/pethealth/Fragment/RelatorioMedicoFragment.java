@@ -30,6 +30,7 @@ import com.example.pethealth.Dao.AgendamentoDAO;
 import com.example.pethealth.Dao.RespostaRelatorioDAO;
 import com.example.pethealth.Dao.UsuarioDAO;
 import com.example.pethealth.Model.RespostaRelatorio;
+import com.example.pethealth.Model.Usuario;
 import com.example.pethealth.R;
 import com.example.pethealth.WebService.Connection;
 import com.example.pethealth.WebService.RespostaRelatorioWs;
@@ -56,6 +57,8 @@ public class RelatorioMedicoFragment extends Fragment {
     private UsuarioDAO usuarioDAO;
     private List<RespostaRelatorio> respostaRelatorioList = new ArrayList<>();
     private List<RespostaRelatorio> listaAux = new ArrayList<>();
+    private List<RespostaRelatorio> listDataBase = new ArrayList<>();
+
 
 
     public RelatorioMedicoFragment() {
@@ -77,7 +80,6 @@ public class RelatorioMedicoFragment extends Fragment {
         usuarioDAO = new UsuarioDAO(context);
 
 
-
         listarRespostaRelatorio(context, "respostaRelatorio/listaRespostaRelatorio");
 
 
@@ -92,13 +94,12 @@ public class RelatorioMedicoFragment extends Fragment {
             @Override
             public void clickListenerView(View view, int index) {
 
-
-
-                    Intent intent = new Intent(context, RelatorioMedicoActivity.class);
-                    intent.putExtra("id_relatorio", listaAux.get(index).getIdAgenda());
-                    startActivity(intent);
+                Intent intent = new Intent(context, RelatorioMedicoActivity.class);
+                intent.putExtra("id_relatorio", listaAux.get(index).getIdAgenda());
+                startActivity(intent);
 
             }
+
             @Override
             public void onLongClick(View view, int i) {
             }
@@ -113,7 +114,7 @@ public class RelatorioMedicoFragment extends Fragment {
         return fragment;
     }
 
-    public  void listarRespostaRelatorio(final Context contexto, String path) {
+    public void listarRespostaRelatorio(final Context contexto, String path) {
 
         RequestQueue queue = Volley.newRequestQueue(contexto);
         final JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, Connection.getUrl() + path, null, new Response.Listener<JSONArray>() {
@@ -127,37 +128,11 @@ public class RelatorioMedicoFragment extends Fragment {
                     }.getType());
 
 
-                    Log.e("resposta_teste", String.valueOf(usuarioDAO.findAllUsuario().getIdCliente()));
+                for (int p = 0 ; p<list.size();p++) {
+                    db.inserir(list.get(p));
+                    Log.e("inserioBanco", "inserio" + list.size());
+                }
 
-                    Log.e("resposta_teste", String.valueOf(db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()).size()));
-
-                    if (db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente()).size() > 0) {
-
-                        List<RespostaRelatorio> listDataBase = db.ListarBanco(usuarioDAO.findAllUsuario().getIdCliente());
-                        int cont = 0;
-
-                        for (int i = 0; i < list.size(); i++) {
-
-                            for (int x = 0; x < listDataBase.size(); x++) {
-                                if (list.get(i).getId() != listDataBase.get(x).getId()) {
-                                    cont = cont + 1;
-
-                                }
-                            }
-                            if (cont == listDataBase.size()) {
-                                db.inserir(list.get(i));
-                                Log.e("inserioBanco", "inserio" + list.size());
-                                cont = 0;
-                            }
-
-                        }
-
-                    } else {
-
-                        for (int i = 0; i < list.size(); i++) {
-                            db.inserir(list.get(i));
-                        }
-                    }
                     List<Integer> lista = new ArrayList<>();
                     List<RespostaRelatorio> listaBanco = new ArrayList<>();
 
@@ -173,15 +148,10 @@ public class RelatorioMedicoFragment extends Fragment {
                             if (!lista.contains(idAgenda)){
                                 lista.add(idAgenda);
                                 listaAux.add(listaBanco.get(y));
-
+                                recyclerView.setAdapter(new AdapterRelatorioMedico(context, listaAux, clickListner()));
                             }
                         }
-
-                        recyclerView.setAdapter(new AdapterRelatorioMedico(context,listaAux,clickListner()));
                     }
-
-
-
                 } catch (IllegalStateException | JsonSyntaxException exception) {
                     exception.printStackTrace();
                     Log.e("Erro", "Erro passou aqui primeiro");
