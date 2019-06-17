@@ -145,11 +145,6 @@ public class HomeFragment extends Fragment {
                     recyclerView.setAdapter(new AdapterAgendamento(context, db.ListarBanco(ag.getIdCliente()),
                             clickListner()));
 
-                    Toast.makeText(context,"retorno: " + ag.getStatus_agendamento(),Toast.LENGTH_LONG).show();
-
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

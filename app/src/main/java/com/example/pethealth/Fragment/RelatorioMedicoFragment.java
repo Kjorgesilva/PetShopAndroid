@@ -128,10 +128,10 @@ public class RelatorioMedicoFragment extends Fragment {
                     }.getType());
 
 
-                for (int p = 0 ; p<list.size();p++) {
-                    db.inserir(list.get(p));
-                    Log.e("inserioBanco", "inserio" + list.size());
-                }
+                    for (int p = 0 ; p<list.size();p++) {
+                        db.inserir(list.get(p));
+                        Log.e("inserioBanco", "inserio" + list.size());
+                    }
 
                     List<Integer> lista = new ArrayList<>();
                     List<RespostaRelatorio> listaBanco = new ArrayList<>();

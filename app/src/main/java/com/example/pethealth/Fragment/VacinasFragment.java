@@ -83,9 +83,7 @@ public class VacinasFragment extends Fragment {
 
             @Override
             public void vacinasOnclickListener(View view, final int index) {
-                Toast.makeText(getContext(), "funcionando", Toast.LENGTH_LONG).show();
-
-            }
+                }
         };
     }
 
